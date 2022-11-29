@@ -16,7 +16,7 @@ if user=="ADMIN":
         if c==1:
             stocks()
             break
-        elif c==2: 
+        elif c==2:
             calculator()
             break
         elif c==3:
