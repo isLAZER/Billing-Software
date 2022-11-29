@@ -10,7 +10,7 @@ password_in = input("Enter your password: ")
 
 user=login(username_in,password_in)
 
-if user=="ADMIN":  #jjjjjjjj
+if user=="ADMIN":
     while True:
         c = int(input("\n (1) Stocks\n (2) Calculator\n (3) Shop details\n>>>"))    
         if c==1:
