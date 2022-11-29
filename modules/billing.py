@@ -56,7 +56,7 @@ def billing():
     bill={}
     while True:
         print()
-        x=input('(1) Add product to cart\n(2) Remove product from cart\n(3) Displaying information of a particular item\n(4) Displaying the items in cart\n(5) CHECKOUT\n[Press X to exit search]\n>>> ')
+        x=input('(1) Add product to cart\n(2) Remove product from cart\n(3) Displaying information of a particular item\n(4) Displaying the items in cart\n(5) CHECKOUT\n>>> ')
         
         #To append an item into the bill
         if x==1:
