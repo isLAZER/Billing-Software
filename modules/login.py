@@ -1,9 +1,9 @@
 #Importing modules
 import pickle
-credentials = open("Backend/.admin.dat","rb")
-information=pickle.load(credentials)
-username=information[0]
-password=information[1]
+credentials = open("Backend/login_info.dat","rb")
+info=pickle.load(credentials)
+username=info['user']
+password=info['pass']
 print("login :-")
 
 #login function 

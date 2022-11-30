@@ -9,7 +9,7 @@ def item_shop():
 
         print("Search:-")    
         print()
-        c = input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press X to exit search]\n>>>")
+        c = input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press X to exit search]\n..> ")
         print()
         if c == 1:
             itm = input("enter item name to be searched: ")

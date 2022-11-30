@@ -3,28 +3,54 @@
 from modules.mysql_init import *
 from beautifultable import *
 
+
 #Defing the function 
-def stocks():
+def shop():
     while True:
-        x=int(input('(1) VIEW STOCKS\n(2) ADDING NEW ITEM IN  STOCKS\n(3) REMOVING STOCKS\n(4) UPDATE STOCKS \n(5) Exit\n> '))
-        #Below code will show full stock
+        print()
+        x=int(input('(1) VIEW THE ITEM SHOP\n(2) ADD NEW ITEM ENTRY\n(3) REMOVE ITEM ENTRY\n(4) UPDATE AN ENTRY\n(5) Exit\n..> '))
+        #display item shop
         if x==1:
-            mysql_csr.execute('SELECT * from productInfo;')
+            mysql_csr.execute('SELECT * from itemshop')
             data=mysql_csr.fetchall()
             count=mysql_csr.rowcount
             table = BeautifulTable()
-            table.columns.header=["ITEM_CODE",'ITEM_NAME','STOCK','PRICE','CATEGORY']
+            table.columns.header=["ITEM_CODE",'ITEM_NAME','BRAND','CATEGORY','PRICE','DISCOUNT']
             if count == 0:
-                print("No Items in stock currently!\nStock will be renewed soon :)")
+                print("No Items in shop currently!")
             else:
                 for row in data:
-                    table.rows.append(row)
-                
+                    table.rows.append(row)    
+            
+            print(table)
+
+
+
+def stocks():
+    while True:
+        print()
+        x=int(input('(1) VIEW STOCKS\n(2) UPDATE STOCKS \n(5) Exit\n..> '))
+        #display stock details
+        if x==1:
+            mysql_csr.execute('SELECT * from stocks')
+            data=mysql_csr.fetchall()
+            count=mysql_csr.rowcount
+            table = BeautifulTable()
+            table.columns.header=["ITEM_CODE",'ITEM_NAME','BRAND','PRICE','STOCK','STATUS']
+            if count == 0:
+                print("No Item in stock!")
+            else:
+                for row in data:
+                    table.rows.append(row)    
             print()
             print(table)
+        #updating stocks
+        elif x==2:
+            cod=input('Enter the Code of the Item to update stocks of: ')
+            #work in progress  
             
-            
-        #Below code will show ADD new item to stock
+        #
+        '''
         if x==2:
             item_code=input("Enter the Item code : ")
             item_name=input("Enter the Item name : ")
@@ -52,7 +78,8 @@ def stocks():
                 mysql_csr.execute(f"UPDATE productInfo set stocks =stocks+{new_quantity} where Item_code='{code.strip()}'")
                 ms.commit()
             except :
-                print(f"SOME ERROR HAPPENED AT OUR END!\n PLEASE RETRY ")                    
+                print(f"SOME ERROR HAPPENED AT OUR END!\n PLEASE RETRY ")
+        '''                    
         #EXIT
         if x==5:
             break
