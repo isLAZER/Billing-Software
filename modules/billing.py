@@ -44,9 +44,11 @@ def item_shop():
                 print(table)
             except:
                 print("No item Found :(")
-
-        else:
+        elif c in 'xX':
             break
+        else:
+            print('Wrong input!')
+            continue
         
 
     
