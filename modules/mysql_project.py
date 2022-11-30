@@ -39,7 +39,7 @@ def append(code,bill):
         print("code not found")
 #This function removes a particular item or a specific quantity you want
 def remove(code,bill):
-    print("1)Reomove all \n2)Remove selected quantity\n")
+    print("(1)Reomove all \n(2)Remove selected quantity\n")
     ch=input("Choose from above:")
     if ch=='1':
         bill.pop(code)
