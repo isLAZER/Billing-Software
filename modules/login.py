@@ -20,8 +20,7 @@ def login(user,passwd):
                     print(f"Welcome {user}!!!")
                     cred.close()
                 return str(user)
-        except:
-                        
+        except:        
             cred.close()
             cred = open("Backend/customer.dat","wb")
             pickle.dump(data+[[user,passwd]],cred)
