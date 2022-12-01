@@ -1,13 +1,13 @@
-billing.py>>search fixing
-          >>date n time
+billing.py          >>search fixing
+                    >>date n time
 
-stocks.py>>update an entry fixing
-         >>updating an stock
+stocks.py           >>update an entry fixing
+                    >>updating an stock
 
-main.py>>cash register
-       >>shop detail page
-       >>settings
+main.py             >>cash register
+                    >>shop detail page
+                    >>settings
 
-mysql_project.py>>recreation
+mysql_project.py    >>recreation
 
-login.py>>membership
+login.py            >>membership
