@@ -23,7 +23,5 @@ def login(user,passwd):
                 pickle.dump(data+[[user,passwd]],cred)
                 print(f"New User Detected. Signup completed as {user}!!!")
         return str(user)
-        
+
 credentials.close()
-
-
