@@ -4,7 +4,7 @@ credentials = open("Backend/login_info.dat","rb")
 info=pickle.load(credentials)
 username=info['user']
 password=info['pass']
-print("login :-")
+print("Login:")
 
 #Login function 
 def login(user,passwd):
