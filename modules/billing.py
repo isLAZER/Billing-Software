@@ -10,46 +10,101 @@ def item_shop():
         print()
         c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press 0 to exit search]\n..> "))
         print()
+
+        #item search
         if c==1:
-            itm = input("enter item name to be searched: ")
+            tb=BeautifulTable()
+            mysql_csr.execute(f"SELECT DISTINCT(ITEM_NAME) FROM itemshop order by ITEM_CODE ")
+            data = mysql_csr.fetchall()
+            tb.columns.header = ["Item list"]
+            for i in data:
+                tb.rows.append(i)
+            print(tb)
             try:
-                mysql_csr.execute(f"SELECT * FROM itemshop where ITEM_NAME = {itm} ")
+                itm = input("Enter item name to be searched: ")
+                mysql_csr.execute(f"SELECT * FROM itemshop where ITEM_NAME = '{itm}' order by ITEM_NAME asc ")
                 data = mysql_csr.fetchall()
+                count=mysql_csr.rowcount
                 table = BeautifulTable()
-                table.columns.header = ['Search results']
-                table.append(data)
-                print(table)
+                table.columns.header = ['CODE','NAME','BRAND','CATEGORY','PRICE', 'DISCOUNT','OFFERS']
+                for i in data:
+                    table.rows.append(i)
+                if count==0:
+                    print("No item Found :(")
+                else:
+                    print('Search results -')
+                    print(table)
+                
+                #continue option
+                x=input("Continue search?(Y/N): ")
+                if x=='y' or x=='Y':
+                    continue
+                else:
+                    print("Search completed!")
+                    break    
             except:
                 print("No item Found :(")
+        
+        #brand search
         elif c==2:
+            tb=BeautifulTable()
+            mysql_csr.execute(f"SELECT DISTINCT(BRAND_NAME) FROM brand order by BRAND_NAME ")
+            data = mysql_csr.fetchall()
+            tb.columns.header = ["Brand list"]
+            for i in data:
+                tb.rows.append(i)
+            print(tb)
             try:
-                itm = input("enter brand name to be searched: ")
-                mysql_csr.execute(f"SELECT * FROM itemshop where BRAND_NAME = {itm} ")
+                itm = input("Enter Category to be searched: ")
+                mysql_csr.execute(f"SELECT ITEM_CODE, ITEM_NAME, PRICE, DISCOUNT, OFFERS, CATEGORY FROM itemshop where brand = '{itm}' order by ITEM_NAME asc ")
                 data = mysql_csr.fetchall()
+                count=mysql_csr.rowcount
                 table = BeautifulTable()
-                table.columns.header = ['Search results']
-                table.rows.append(data)
-                print(table)
+                table.columns.header = ['CODE','NAME','PRICE', 'DISCOUNT','OFFERS','CATEGORY']
+                for i in data:
+                    table.rows.append(i)
+                if count==0:
+                    print("No item Found :(")
+                else:
+                    print('Search results -')
+                    print(table)
+                
+                #continue option
+                x=input("Continue search?(Y/N): ")
+                if x=='y' or x=='Y':
+                    continue
+                else:
+                    print("Search completed!")
+                    break    
             except:
                 print("No item Found :(")
+
+        
+        #category search
         elif c==3:
             tb=BeautifulTable()
-            mysql_csr.execute(f"SELECT DISTINCT(CATEGORY) FROM itemshop order by BRAND ")
+            mysql_csr.execute(f"SELECT DISTINCT(CATEGORY_NAME) FROM category order by CATEGORY_NAME ")
             data = mysql_csr.fetchall()
             tb.columns.header = ["Category list"]
             for i in data:
                 tb.rows.append(i)
             print(tb)
             try:
-                itm = input("enter Category to be searched: ")
-                mysql_csr.execute(f"SELECT ITEM_NAME ,BRAND ,PRICE , DISCOUNT FROM itemshop where category = '{itm}' order by ITEM_NAME asc ")
+                itm = input("Enter Category to be searched: ")
+                mysql_csr.execute(f"SELECT ITEM_CODE, ITEM_NAME, BRAND, PRICE, DISCOUNT, OFFERS FROM itemshop where category = '{itm}' order by ITEM_NAME asc ")
                 data = mysql_csr.fetchall()
+                count=mysql_csr.rowcount
                 table = BeautifulTable()
-                table.columns.header = ['NAME','BRAND','PRICE', 'DISCOUNT']
+                table.columns.header = ['CODE','NAME','BRAND','PRICE', 'DISCOUNT','OFFERS']
                 for i in data:
                     table.rows.append(i)
-                print('Search results -')
-                print(table)
+                if count==0:
+                    print("No item Found :(")
+                else:
+                    print('Search results -')
+                    print(table)
+                
+                #continue option
                 x=input("Continue search?(Y/N): ")
                 if x=='y' or x=='Y':
                     continue

@@ -31,7 +31,7 @@ def shop():
             i_price =input("Enter the rate per item: ")
             i_catg=input('Enter the category of that item: ')
             i_dis=input("Enter the discount percentage : ")
-            mysql_csr.execute(f"insert into itemshop values('{i_code}','{i_name}','{i_brand}','{i_catg}','{i_price}/-','{i_dis} %')")
+            mysql_csr.execute(f"insert into itemshop values('{i_code}','{i_name}','{i_brand}','{i_catg}','{i_price} /-','{i_dis} %')")
             ms.commit()
             print("ITEM ADDED TO DATABASE!")
         
