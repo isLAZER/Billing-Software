@@ -5,7 +5,7 @@ stocks.py           >>update an entry - fixing
                     >>updating an stock
 
 main.py             >>cash register
-                    >>shop detail page
+                    >>shop details page
                     >>settings
 
 mysql_project.py    >>recreation
