@@ -8,7 +8,7 @@ def item_shop():
     while True:
         print("Search:-")    
         print()
-        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press X to exit search]\n..> "))
+        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press 0 to exit search]\n..> "))
         print()
         if c==1:
             itm = input("enter item name to be searched: ")
@@ -33,6 +33,13 @@ def item_shop():
             except:
                 print("No item Found :(")
         elif c==3:
+            tb=BeautifulTable()
+            mysql_csr.execute(f"SELECT DISTINCT(CATEGORY) FROM itemshop order by BRAND ")
+            data = mysql_csr.fetchall()
+            tb.columns.header = ["Category list"]
+            for i in data:
+                tb.rows.append(i)
+            print(tb)
             try:
                 itm = input("enter Category to be searched: ")
                 mysql_csr.execute(f"SELECT ITEM_NAME ,BRAND ,PRICE , DISCOUNT FROM itemshop where category = '{itm}' order by ITEM_NAME asc ")
@@ -47,10 +54,13 @@ def item_shop():
                 if x=='y' or x=='Y':
                     continue
                 else:
-                    break
+                    print("Search completed!")
+                    break    
             except:
                 print("No item Found :(")
-        elif c==4:
+
+        elif c==0:
+            print("Search completed!")
             break
         else:
             print('Wrong input!')

@@ -19,7 +19,7 @@ def login(user,passwd):
             data = pickle.load(cred)
             for i in data:
                 if i[0] == user and i[1] == passwd:
-                    print(f"Logged in as {user} \nWelcome Back!")
+                    print(f'Logged in as "{user}" ')
                     cred.close()
                     return str(user)
             cred.close()
