@@ -10,7 +10,7 @@ print("Login:")
 def login(user,passwd):
     #Checking for ADMIN access
     if user==username and passwd==password:
-        print(f"Logged in as {user}")
+        print(f"Logged in as ADMIN ")
         return "ADMIN"
     else:
         cred = open("Backend/customer.dat","rb")

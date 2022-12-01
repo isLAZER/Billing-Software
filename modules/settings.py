@@ -1,13 +1,26 @@
 #Importing modules
 import pickle 
 from modules.InformationHandler import *
+
 def setting():
-    c=int(input('1) Change the username and password\n2) Change the store information\n>'))
-    if c==1:
-        credintials_file = open("Backend/.admin.dat","wb")
-        username =input("Enter the username you want : ")
-        password = input("Enter the password you want : ")
-        pickle.dump([username,password], credintials_file)
-        credintials_file.close()
-    if c==2:
-        Information()
+    while True:
+        c=input('(1) Change admin username and password\n[Press X to exit]\n..> ')
+        if c==1:
+            file = open("Backend/admin.dat","wb")
+            username = str(input("Enter the new username : "))
+            while True:
+                password = str(input("Enter a password : "))
+                rec={'user':username,'pass':password}
+                confirm_pass=str(input("Confirm password : "))
+                if password==confirm_pass:
+                    pickle.dump(rec,file)
+                    print('Setup complete!\nUsername and Password changed...')
+                    break
+                else:
+                    print("Error!\n---Please Retry!")
+                    continue
+            print()
+            file.close()
+
+        else:
+            break

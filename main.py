@@ -6,9 +6,10 @@ from modules.settings import *
 
 username_in = input("Enter your username: ")
 password_in = input("Enter your password: ")
-
+#Login 
 user=login(username_in,password_in)
 
+#Menu 
 if user=="ADMIN":
     while True:
         c = int(input("\nMenu:-\n(1) Item Shop\n(2) Stocks\n(3) Cash Register\n(4) Shop details\n(5) Settings\n..> "))    
@@ -25,8 +26,7 @@ if user=="ADMIN":
             #shop details page in working!
             break
         elif c==5:
-            #settings in work!
-            break
+            setting()
         else:
             print("OPTION NOT AVAILABLE ")
 
