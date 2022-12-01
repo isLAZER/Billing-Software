@@ -1,7 +1,7 @@
 billing.py          >>search fixing
                     >>date n time
 
-stocks.py           >>update an entry fixing
+stocks.py           >>update an entry - fixing
                     >>updating an stock
 
 main.py             >>cash register
