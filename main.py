@@ -4,7 +4,6 @@ from modules.billing import *
 from modules.stocks import *
 from modules.settings import *
 
-
 username_in = input("Enter your username: ")
 password_in = input("Enter your password: ")
 
@@ -23,7 +22,7 @@ if user=="ADMIN":
             #cash register in work!
             break
         elif c==4:
-            #shop  details page in working!
+            #shop details page in working!
             break
         elif c==5:
             #settings in work!

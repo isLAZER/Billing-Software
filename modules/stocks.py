@@ -39,7 +39,7 @@ def shop():
         elif x==3:
             code=input("Enter the code of the item you want to remove from database: ")
             try:
-                mysql_csr.execute(f"DELETE FROM productInfo WHERE Item_code='{code}';  ")
+                mysql_csr.execute(f"DELETE FROM itemshop WHERE Item_code='{code}';  ")
                 print("Item removed from datbase ")
                 ms.commit()
             except:
@@ -69,6 +69,7 @@ def stocks():
         #updating stocks
         elif x==2:
             cod=input('Enter the Code of the Item to update stocks of: ')
+            #while True:
             #work in progress 
             # features
             # 1. update the amt in stock
@@ -76,10 +77,6 @@ def stocks():
             # 3. profit count
             
         '''
-        
-        #Below code will REMOVE an item from stock
-        if x==3:
-            
         #Below code will increase the number of items in stock
         if x==4:
             code = input("Enter the code of the item of which you want to increase: ")
