@@ -61,3 +61,9 @@ def remove(code,bill):
 
 def register():
     c=int(input("(1) Check current sales\n(2) "))
+
+
+#constant
+query=' ITEM_CODE,ITEM_NAME,CATEGORY_NAME,PRICE,DISCOUNT,BRAND_NAME FROM itemshop,category,brand where category.CAT_ID = itemshop.cat_id and brand.BRAND_ID=itemshop.brand_id '
+
+
