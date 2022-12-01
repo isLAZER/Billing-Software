@@ -30,7 +30,7 @@ def login(user,passwd):
             cred.close()
             cred = open("Backend/customer.dat","ab")
             pickle.dump([[user,passwd]],cred)
-            print(f"New User Detected. Signup completed!")
+            print("New User Detected. Signup completed!")
             return str(user)
 
 credentials.close()
