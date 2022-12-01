@@ -58,3 +58,6 @@ def remove(code,bill):
             print("ITEM REMOVED")
         else:
             print("ENTERED QUANTITY IS MORE THAN THAT WHAT YOU HAVE IN YOUR CART!!!\n")
+
+def register():
+    c=int(input("(1) Check current sales\n(2) "))

@@ -8,7 +8,7 @@ def item_shop():
     while True:
         print("Search:-")    
         print()
-        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press 0 to exit search]\n..> "))
+        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n(4) View entire shop products\n[Press 0 to exit search]\n..> "))
         print()
 
         #item search
@@ -113,6 +113,17 @@ def item_shop():
                     break    
             except:
                 print("No item Found :(")
+
+        elif c==4:
+            mysql_csr.execute("SELECT * FROM itemshop order by ITEM_CODE ")
+            data = mysql_csr.fetchall()
+            table=BeautifulTable()
+            table.columns.header = ['CODE','NAME','BRAND','CATEGORY','PRICE', 'DISCOUNT','OFFERS']
+            for i in data:
+                table.rows.append(i)
+                print(table)
+            
+
 
         elif c==0:
             print("Search completed!")

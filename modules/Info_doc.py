@@ -14,3 +14,6 @@ def Information():
     Info = open("Backend/information.dat","wb")
     pickle.dump([Store_Name,Store_Contact,Mobile_No,Store_Address,Store_GSTID,Store_Discription],Info)
     Info.close()
+
+
+

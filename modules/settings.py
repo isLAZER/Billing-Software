@@ -1,6 +1,5 @@
 #Importing modules
 import pickle 
-from modules.InformationHandler import *
 
 def setting():
     while True:
