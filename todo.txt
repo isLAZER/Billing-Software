@@ -1,5 +1,5 @@
 billing.py          >>search fixing
-                    >>date n time
+                    >>date and time
 
 stocks.py           >>update an entry - fixing
                     >>updating an stock
