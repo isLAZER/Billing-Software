@@ -12,10 +12,18 @@ def login(user,passwd):
     if user==username and passwd==password:
         return "ADMIN"
     else:
-        print(f"Logged in as {user}")
+        cred = open("Backend/user_cred.dat","rb")
+        data = pickle.load(cred)
+        for i in data:
+            if i[0] == user and i[1] == passwd:
+                print(f"Welcome {user}!!!")
+            else:
+                cred.close()
+                cred = open("Backend/user_cred.dat","wb")
+                pickle.dump(data+[[user,passwd]],cred)
+                print(f"New User Detected. Signup completed as {user}!!!")
         return str(user)
-    
-
+        
 credentials.close()
 
 
