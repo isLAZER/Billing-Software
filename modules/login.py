@@ -6,9 +6,9 @@ username=info['user']
 password=info['pass']
 print("login :-")
 
-#login function 
+#Login function 
 def login(user,passwd):
-    #checking for ADMIN access
+    #Checking for ADMIN access
     if user==username and passwd==password:
         return "ADMIN"
     else:
