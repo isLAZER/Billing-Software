@@ -6,15 +6,14 @@ from beautifultable import BeautifulTable
 
 def item_shop():
     while True:
-
         print("Search:-")    
         print()
-        c = input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press X to exit search]\n..> ")
+        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n[Press X to exit search]\n..> "))
         print()
-        if c == 1:
+        if c==1:
             itm = input("enter item name to be searched: ")
             try:
-                mysql_csr.execute(f"SELECT * FROM productInfo where ITEM_NAME = {itm} ")
+                mysql_csr.execute(f"SELECT * FROM itemshop where ITEM_NAME = {itm} ")
                 data = mysql_csr.fetchall()
                 table = BeautifulTable()
                 table.columns.header = ['Search results']
@@ -22,29 +21,36 @@ def item_shop():
                 print(table)
             except:
                 print("No item Found :(")
-        elif c == 2:
+        elif c==2:
             try:
                 itm = input("enter brand name to be searched: ")
-                mysql_csr.execute(f"SELECT * FROM productInfo where BRAND_NAME = {itm} ")
+                mysql_csr.execute(f"SELECT * FROM itemshop where BRAND_NAME = {itm} ")
                 data = mysql_csr.fetchall()
                 table = BeautifulTable()
                 table.columns.header = ['Search results']
-                table.append(data)
+                table.rows.append(data)
                 print(table)
             except:
                 print("No item Found :(")
-        elif c == 3:
+        elif c==3:
             try:
-                itm = input("enter brand name to be searched: ")
-                mysql_csr.execute(f"SELECT * FROM productInfo where CATEGORY = {itm} ")
+                itm = input("enter Category to be searched: ")
+                mysql_csr.execute(f"SELECT ITEM_NAME ,BRAND ,PRICE , DISCOUNT FROM itemshop where category = '{itm}' order by ITEM_NAME asc ")
                 data = mysql_csr.fetchall()
                 table = BeautifulTable()
-                table.columns.header = ['Search results']
-                table.append(data)
+                table.columns.header = ['NAME','BRAND','PRICE', 'DISCOUNT']
+                for i in data:
+                    table.rows.append(i)
+                print('Search results -')
                 print(table)
+                x=input("Continue search?(Y/N): ")
+                if x=='y' or x=='Y':
+                    continue
+                else:
+                    break
             except:
                 print("No item Found :(")
-        elif c in 'xX':
+        elif c==4:
             break
         else:
             print('Wrong input!')

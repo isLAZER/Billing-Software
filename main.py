@@ -11,7 +11,7 @@ user=login(username_in,password_in)
 
 if user=="ADMIN":
     while True:
-        c = int(input("\n(1) Item Shop\n(2) Stocks\n(3) Cash Register\n(4) Shop details\n(5) Settings\n..> "))    
+        c = int(input("\nMenu:-\n(1) Item Shop\n(2) Stocks\n(3) Cash Register\n(4) Shop details\n(5) Settings\n..> "))    
         if c==1:
             shop()
             break
@@ -32,7 +32,7 @@ if user=="ADMIN":
 
 else:
     while True:        
-        c = int(input("\n(1) Item Shop \n(2) Billing \n(3) Log Out \n..> "))
+        c = int(input("\nMenu:-\n(1) Item Shop \n(2) Billing \n(3) Log Out \n..> "))
         if c==1:
             item_shop()
         elif c==2:
