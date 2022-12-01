@@ -17,12 +17,12 @@ def login(user,passwd):
         for i in data:
             if i[0] == user and i[1] == passwd:
                 print(f"Welcome {user}!!!")
-                return str(user)
-            else:
                 cred.close()
-                cred = open("Backend/customer.dat","wb")
-                pickle.dump(data+[[user,passwd]],cred)
-                print(f"New User Detected. Signup completed!")
                 return str(user)
+        cred.close()
+        cred = open("Backend/customer.dat","wb")
+        pickle.dump(data+[[user,passwd]],cred)
+        print(f"New User Detected. Signup completed!")
+        return str(user)
 
 credentials.close()
