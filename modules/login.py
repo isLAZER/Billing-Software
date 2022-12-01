@@ -15,10 +15,13 @@ def login(user,passwd):
         cred = open("Backend/customer.dat","rb")
         data = pickle.load(cred)
         for i in data:
-            if i[0] == user and i[1] == passwd:
-                print(f"Welcome {user}!!!")
-                cred.close()
-                return str(user)
+            try:
+                if i[0] == user and i[1] == passwd:
+                    print(f"Welcome {user}!!!")
+                    cred.close()
+                    return str(user)
+            except:
+                pass
         cred.close()
         cred = open("Backend/customer.dat","wb")
         pickle.dump(data+[[user,passwd]],cred)
