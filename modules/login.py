@@ -22,8 +22,8 @@ def login(user,passwd):
                     cred.close()
                     return str(user)
             cred.close()
-            cred = open("Backend/customer.dat","wb")
-            pickle.dump([[user,passwd]],cred)
+            cred = open("Backend/customer.dat","ab")
+            pickle.dump(data+[[user,passwd]],cred)
             print(f"New User Detected. Signup completed!")
             return str(user)
         except:        
