@@ -6,7 +6,7 @@ def check_stock(code):
     mysql_csr.execute(f"SELECT STOCK from stocks where ITEM_CODE='{code}' ")
     data=mysql_csr.fetchall()
     for row in data:
-        return str(row[0])
+        return int(row[0])
 
 
 def displaySpecific(field,table,exp):
@@ -18,9 +18,18 @@ def displaySpecific(field,table,exp):
         tb.rows.append(i)
     print(tb)
 
+def getrec(code,field):
+    mysql_csr.execute(f"select * from {field} where ITEM_CODE ='{code}'")
+    data = mysql_csr.fetchall()
+    table=BeautifulTable()
+    table.columns.header = ['CODE','NAME','CATEGORY','PRICE','DISCOUNT','BRAND']
+    for i in data:
+        table.rows.append(i)
+    return table
+
 
 def getall():
-    mysql_csr.execute("select * from productInfo order by ITEM_CODE ")
+    mysql_csr.execute("select * from productInfo order by ITEM_NAME ")
     data = mysql_csr.fetchall()
     table=BeautifulTable()
     table.columns.header = ['CODE','NAME','CATEGORY','PRICE','DISCOUNT','BRAND']
@@ -42,32 +51,36 @@ def displayitem(code,field):
     data=mysql_csr.fetchall()
     for row in data:
         if code.upper()==row[0].upper():
-            return 'Product code: '+str(row[0])+'\nProduct name: '+str(row[1])+'\nCategory: '+str(row[2])+'\nPrice: '+str(row[3])+'\nDiscount: '+str(row[2])+'\nBrand: '+str(row[4])+'\n'
+            return 'Product code: '+str(row[0])+'\nProduct name: '+str(row[1])+'\nCategory: '+str(row[2])+'\nPrice: '+str(row[3])+'\nDiscount: '+str(row[4])+'\nBrand: '+str(row[5])+'\n'
     else:
-        return 1              
+        return 1
+
 #This function will add the items in a bill 
 def append(code,bill):
     a=displayitem(code,'productInfo')
-    print("Item description :>\n")
+    print("\nItem description :>\n")
     n=getproduct(code,'productInfo')
     z=check_stock(code)
     if a!=1:
         print(str(a))
         quantity_utilised = int(input("Enter the number of items you want: "))
         if z>=quantity_utilised:
-            mysql_csr.execute(f'update productInfo set stocks =stocks-{quantity_utilised} where Item_code = "{code}";')
+            mysql_csr.execute(f'update stocks set stock =stock-{quantity_utilised} where Item_code = "{code}";')
             ms.commit()
             z=quantity_utilised
-            bill[code]=n
+            total=z*n[3]
+            bill.append([n[1],n[3],n[2],n[5],z,total])
             print("ITEM ADDED TO THE BILL\n")
+            return bill
         else:
             print("Entered quantity is more than that in stock\n")
+            
     else:
-        print("code not found")
+        print("Item code not found!")
 
 #This function removes a particular item or a specific quantity you want
 def remove(code,bill):
-    print("(1)Reomove all \n(2)Remove selected quantity\n")
+    print("(1)Remove all \n(2)Remove selected quantity\n")
     ch=input("Choose from above:")
     if ch=='1':
         bill.pop(code)
@@ -87,52 +100,12 @@ def remove(code,bill):
         else:
             print("ENTERED QUANTITY IS MORE THAN THAT WHAT YOU HAVE IN YOUR CART!!!\n")
 
-def register():
-    while True:
-        c=int(input("(1) Check Profit on a Product\n(2) Check Amount Paid to the suppliers\n(3) VIew profit chart \n(4) Exit\n..> "))
-        if c==1:
-            code=input("Enter the product code to be checked: ")
-            print("Product status:-")
-            mysql_csr.execute(f"SELECT ITEM_CODE,ITEM_NAME,BRAND,PROFITS FROM stocks where ITEM_CODE ='{code}'")
-            data=mysql_csr.fetchall()
-            table = BeautifulTable()
-            table.columns.header=["ITEM_CODE",'NAME','BRAND','PROFIT']
-            for row in data:
-                table.rows.append(row)
-            print(table)
-
-
-        elif c==2:
-            print("Supplier logs:-")
-            mysql_csr.execute("SELECT ITEM_CODE,ITEM_NAME,BRAND,STOCK,AMT_PAID,TOTAL_AMT_PAID FROM stocks,supplier where SUPP_ID=SUPPLIER_ID ")
-            data=mysql_csr.fetchall()
-            table = BeautifulTable()
-            table.columns.header=["ITEM_CODE",'NAME','BRAND','STOCK',"AMOUNT_PAID(per pc.)",'TOTAL_AMT_PAID']
-            for row in data:
-                table.rows.append(row)
-            print(table)
-
-        
-        elif c==3:
-            print("Profit chart:-")
-            mysql_csr.execute("SELECT ITEM_CODE,ITEM_NAME,BRAND,PRICE,POSBL_EARN,AMT_PAID,TOTAL_AMT_PAID,PROFITS FROM stocks ")
-            data=mysql_csr.fetchall()
-            table = BeautifulTable()
-            table.columns.header=["ITEM_CODE",'NAME','BRAND','PRICE(per pc.)','TOTAL',"AMOUNT_PAID(per pc.)",'TOTAL_AMT_PAID',"PROFIT"]
-            for row in data:
-                table.rows.append(row)
-            print(table)
-        elif c==4:
-            break
-        else:
-            print("Wrong input!")
-            continue
 
 def getstock(code):
     mysql_csr.execute(f"SELECT * from stocks where ITEM_CODE='{code}' ")
     data=mysql_csr.fetchall()
     table = BeautifulTable()
-    table.columns.header = ["ITEM_CODE",'NAME','BRAND','PRICE(per pc.)','STOCK','STATUS','TOTAL',"AMOUNT_PAID(per pc.)",'TOTAL_AMT_PAID',"PROFIT","SUPPLIER_ID"]
+    table.columns.header = ["ITEM_CODE",'NAME','BRAND','PRICE','STOCK','STATUS',"SUPPLIER_ID"]
     for row in data:
         table.rows.append(row)
     print(table)
@@ -169,6 +142,16 @@ def supplier_info(mode,code=None):
         print("not a valid mode!")
 
 
-
+def update(code,field,exp):
+    print("Selected Record:-")
+    print(getrec(code,'productInfo'))
+    try:
+        new=input("Enter New "+exp+": ")
+        mysql_csr.execute(f"UPDATE productinfo SET {field} = '{new}' WHERE ITEM_CODE = '{code}' ")
+        ms.commit()
+        print("Entry updated!")
+        print()
+    except:
+        print("Some error occured!\nTry again later...")
 
 

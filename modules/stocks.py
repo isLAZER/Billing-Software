@@ -7,8 +7,7 @@ from beautifultable import *
 #Defing the function 
 def shop():
     while True:
-        print()
-        x=int(input('(1) VIEW THE ITEM SHOP\n(2) ADD NEW ITEM ENTRY\n(3) REMOVE ITEM ENTRY\n(4) UPDATE AN ENTRY\n(5) Exit\n..> '))
+        x=int(input('\nMenu:-\n(1) VIEW THE ITEM SHOP\n(2) ADD NEW ITEM ENTRY\n(3) REMOVE ITEM ENTRY\n(4) CHANGE AN ENTRY\n(5) Exit\n..> '))
         #display item shop
         if x==1:
             mysql_csr.execute('SELECT * from productinfo')
@@ -16,6 +15,7 @@ def shop():
             count=mysql_csr.rowcount
             table = BeautifulTable()
             table.columns.header=["ITEM_CODE",'ITEM_NAME','BRAND','PRICE','DISCOUNT','CATEGORY']
+            
             if count == 0:
                 print("No Items in shop currently!")
             else:
@@ -45,21 +45,49 @@ def shop():
             except:
                 print("AN ERROR OCCURRED\nFAILED TO DELETE ENTRY!")
         
-        #complex updating part 
+        #updating an entry 
+        elif x==4:
+            while True:
+                a = int(input("What do you want to Update\n(1) Change Name\n(2) Change Brand name\n(3) Change category\n(4) Change Price\n(5) Change Discount\n..> "))
+                code=input("Enter the item code to update data: ")
+                if a==1:
+                    update(code,'ITEM_NAME','Name')
+                elif a==2:
+                    update(code,'BRAND','Brand Name')
+                elif a==3:
+                    update(code,'CATEGORY','Category')
+                elif a==4:
+                    update(code,'PRICE','Rate per item')
+                elif a==5:
+                    update(code,'DISCOUNT','Discount %')
+                else:
+                    print('Wrong input!')
+                print("Updated Record:-\n",getrec(code,'productInfo'))
+                print()
+                ch=input("What to continue updating?(Y/N): ")
+                if ch=='y' or ch=='Y':
+                    print()
+                    continue  
+                else:
+                    break
+
         elif x==5:
             break
+        else:
+            print('Wrong input!')
+            continue
+
 
 def stocks():
     while True:
-        print()
-        x=int(input('(1) VIEW STOCKS\n(2) UPDATE STOCKS \n(3) Exit\n..> '))
+        x=int(input('\nMenu:-\n(1) VIEW STOCKS\n(2) UPDATE STOCKS \n(3) Exit\n..> '))
         #display stock details
         if x==1:
             mysql_csr.execute('SELECT * from stocks')
             data=mysql_csr.fetchall()
             count=mysql_csr.rowcount
             table = BeautifulTable()
-            table.columns.header=["ITEM_CODE",'NAME','BRAND','PRICE(per pc.)','STOCK','STATUS','TOTAL',"AMOUNT_PAID(per pc.)",'TOTAL_AMT_PAID',"PROFIT","SUPPLIER_ID"]
+            table.columns.header=["ITEM_CODE",'NAME','BRAND','PRICE(per pc.)','STOCK','STATUS',"SUPPLIER_ID"]
             if count == 0:
                 print("No Item in stock!")
             else:
@@ -71,25 +99,30 @@ def stocks():
         #updating stocks
         elif x==2:
             while True:
-                c=int(input("(1) Update the amount of stock for an item\n(2) Update status of a stock\n(3) Change supplier info \n..>"))
+                c=int(input("(1) Update stock amount for an item\n(2) Update status of a stock\n(3) Change supplier info \n..> "))
                 if c==1:
                     code=input('Enter the Code of the Item to update stocks of: ')
                     getstock(code)
                     print()
                     new_val=int(input("Enter the stock value to be added: "))
                     try:
-                        mysql_csr.execute(f"UPDATE stocks SET STOCKS = stocks+{new_val} where ITEM_CODE='{code}'")
+                        mysql_csr.execute(f"UPDATE stocks SET STOCK = stock+{new_val} where ITEM_CODE='{code}'")
                         ms.commit()
+                        print("Amount updated!")
+                        print()
+                        print("Updated Record:-")
+                        getstock(code)
                     except :
                         print(f"SOME ERROR HAPPENED AT OUR END!\nPLEASE RETRY ")
                         continue
+                    
 
                 elif c==2:
                     code=input('Enter the Code of the Item to update stocks of: ')
                     getstock(code)
                     print()
                     while True:
-                        print("[\t out of stock -0\n instock - 1\n low on stock -2\t]")
+                        print("[ > 0- out of stock \n  > 1- instock \n  > 2- low on stock  ]")
                         z=int(input("Enter the status from above menu: "))
 
                         if z==0:
@@ -103,8 +136,19 @@ def stocks():
                             ms.commit()
                         else:
                             print("Wrong input\nplease refer the status menu to put the correct number! ")
-                            break
+                            continue
                         print("Update completed!")
+                        print()
+                        print("Updated Record:-")
+                        getstock(code)
+                        
+                        ch=input("\nWhat to continue updating?(Y/N): ")
+                        if ch=='y' or ch=='Y':
+                            print()
+                            continue  
+                        else:
+                            break
+                        
                 elif c==3:
                     supplier_info(1)
                     code=input('Enter the Code of the Item to update supplier info of: ')
@@ -121,9 +165,22 @@ def stocks():
                         ms.commit()
                         print("Update Completed!")
                         print()
+                        print("Updated Record:-\n")
+                        getstock(code)
                     except:
                         print(f"SOME ERROR HAPPENED AT OUR END!\nPLEASE RETRY ")
                         continue
 
-        if x==3:
+                ch=input("\nWhat to continue updating?(Y/N): ")
+                if ch=='y' or ch=='Y':
+                    print()
+                    continue  
+                else:
+                    break
+
+
+        elif x==3:
             break
+        else:
+            print('Wrong input!')
+            continue

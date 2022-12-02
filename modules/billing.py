@@ -2,13 +2,16 @@
 from modules.mysql_init import *
 from  modules.mysql_project import *
 from beautifultable import BeautifulTable
+from datetime import datetime
 
+now = datetime.now()
+date_time = now.strftime("%d/%m/%Y %H:%M:%S")
 
 def item_shop():
     while True:
         print("Search:-")    
         print()
-        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n(4) View entire shop products\n[Press 0 to exit search]\n..> "))
+        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n(4) View entire shop products\n(5) Exit\n..> "))
         print()
 
         #item search
@@ -84,8 +87,14 @@ def item_shop():
         elif c==4:
             tb=getall()
             print(tb)
+            x=input("Proceed to billing?(Y/N): ")
+            if x=='y' or x=='Y':
+                billing()
+                break
+            else:
+                continue
             
-        elif c==0:
+        elif c==5:
             print("Search completed!")
             break
         else:
@@ -93,20 +102,17 @@ def item_shop():
             continue
 
         #continue option
-        x=input("Continue search?(Y/N): ")
+        x=input("Proceed to billing?(Y/N): ")
         if x=='y' or x=='Y':
             continue
         else:
             print("Search completed!")
             break
+        
       
-
-    
-
 #Defining the function 
 def billing():
-
-    bill={}
+    bill=[]
     while True:
         print()
         print("{YOUR CART}")
@@ -126,22 +132,24 @@ def billing():
             print(str(displayitem(code)))
         #Shows all items in your cart
         elif x==4:
-            table = BeautifulTable()
+
+            table=BeautifulTable()
             total=0
-            table.columns.header = ["ITEM_CODE", "ITEM_NAME",'BRAND',"QUANTITY","RATE PER ITEM",'CATEGORY',"TOTAL COST/ITEM"]
-            for key,value in bill.items():
-                value.append(value[3]*value[4])
-                table.rows.append(value)
-                total +=value[6]
-            table.rows.append([" "," "," "," "," ","TOTAL",total])
-            print()
+            print("CART:-")
+            table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
+            for i in bill:
+                print(i)
+                total+=i[5]
+                table.rows.append(i)
+
+            table.rows.append([" "," "," "," ","TOTAL",total])
             print(table)
-            
+
         #Below will checkout
         elif x==5:
             if bill!={}:
                 import pickle
-                infofile =open("Backend/information.dat","rb")
+                infofile =open("Backend/shop_information.dat","rb")
                 try:
                     r=pickle.load(infofile)
                 except:
@@ -151,6 +159,7 @@ def billing():
                 print()
                 print('STORE_ID: ',r[0])
                 print()
+                print(date_time)
                 print(table)
                 print('ADDRESS: ',r[2])
                 print('MOBILE_NUMBER',r[1])

@@ -4,7 +4,6 @@ credentials = open("Backend/admin.dat","rb")
 info=pickle.load(credentials)
 username=info['user']
 password=info['pass']
-print("Login:")
 
 #Login function 
 def login(user,passwd):
@@ -19,7 +18,7 @@ def login(user,passwd):
             data = pickle.load(cred)
             for i in data:
                 if i[0] == user and i[1] == passwd:
-                    print(f'Logged in as "{user}" ')
+                    print(f'Logged in as "{user}"\nEnjoy the shopping :) ')
                     cred.close()
                     return str(user)
             cred.close()
@@ -37,3 +36,5 @@ def login(user,passwd):
             return str(user)
 
 credentials.close()
+
+
