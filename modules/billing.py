@@ -11,13 +11,13 @@ now = datetime.now()
 
 
 def make_table(tb):
-    list=[tb[1],tb[2],tb[3],tb[4],tb[5],tb[6]]
     table=BeautifulTable()
     total=0
     table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
-    for i in list:
-        total+=i[5]
-        table.rows.append(i)
+    for i in tb:
+        newlist=[i[1],i[2],i[3],i[4],i[5],i[6]]
+        table.rows.append(newlist)
+        total+=i[6]
     table.rows.append([" "," "," "," ","TOTAL",total])
     return table
 
@@ -31,10 +31,10 @@ def item_shop():
 
         #item search
         if c==1:
-            displaySpecific("ITEM_NAME","itemshop","item")
+            displaySpecific("ITEM_NAME","productInfo","item")
             try:
                 itm = input("Enter item name to be searched: ")
-                mysql_csr.execute(f"SELECT * from productInfo where ITEM_NAME='{itm}' order by ITEM_CODE ")
+                mysql_csr.execute(f"SELECT * from productInfo where ITEM_NAME='{itm}' order by ITEM_NAME ")
                 data = mysql_csr.fetchall()
                 count=mysql_csr.rowcount
                 table = BeautifulTable()
@@ -60,7 +60,7 @@ def item_shop():
         
         #brand search
         elif c==2:
-            displaySpecific("BRAND_NAME","BRAND","Brand")
+            displaySpecific("BRAND","productInfo","Brand")
             try:
                 itm = input("Enter Brand name to be searched: ")
                 mysql_csr.execute(f"SELECT * from productInfo where BRAND ='{itm}' order by ITEM_NAME ")
@@ -80,8 +80,7 @@ def item_shop():
  
         #category search
         elif c==3:
-            displaySpecific("CATEGORY_NAME","CATEGORY","Category")
-            print(tb)
+            displaySpecific("CATEGORY","productinfo","Category")
             try:
                 itm = input("Enter Category to be searched: ")
                 mysql_csr.execute(f"SELECT * from productInfo where CATEGORY ='{itm}' order by ITEM_NAME ")
@@ -148,7 +147,7 @@ def billing():
         
         elif x==3:
             if bill!=[]:
-                print("CART:-")
+                print("\nCART:-")
                 print(make_table(bill))
             else:
                 print("NO ITEM IN THE CART!")
