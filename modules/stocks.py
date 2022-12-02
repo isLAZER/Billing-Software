@@ -5,6 +5,7 @@ from beautifultable import *
 
 
 #Defing the function 
+#display shop
 def shop():
     while True:
         x=int(input('\nMenu:-\n(1) VIEW THE ITEM SHOP\n(2) ADD NEW ITEM ENTRY\n(3) REMOVE ITEM ENTRY\n(4) CHANGE AN ENTRY\n(5) Exit\n..> '))
@@ -71,14 +72,14 @@ def shop():
                     continue  
                 else:
                     break
-
+        #exit
         elif x==5:
             break
         else:
             print('Wrong input!')
             continue
 
-
+#manage stocks
 def stocks():
     while True:
         x=int(input('\nMenu:-\n(1) VIEW STOCKS\n(2) UPDATE STOCKS \n(3) Exit\n..> '))
@@ -116,7 +117,6 @@ def stocks():
                     except :
                         print(f"SOME ERROR HAPPENED AT OUR END!\nPLEASE RETRY ")
                         continue
-                    
 
                 elif c==2:
                     code=input('Enter the Code of the Item to update stocks of: ')
@@ -179,7 +179,7 @@ def stocks():
                 else:
                     break
 
-
+        #exit
         elif x==3:
             break
         else:

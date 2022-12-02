@@ -19,6 +19,7 @@ password_in = input("Enter your password: ")
 user=login(username_in,password_in)
 
 #Menu 
+#admin/owner menu
 if user=="ADMIN":
     while True:
         c = int(input("\nMenu:-\n(1) Item Shop\n(2) Stocks\n(3) Cash Register\n(4) Shop details\n(5) Settings\n(6) Log Out\n..> "))    
@@ -37,6 +38,7 @@ if user=="ADMIN":
         else:
             print("OPTION NOT AVAILABLE ")
 
+#customer menu
 else:
     while True:        
         c = int(input("\nMenu:-\n(1) Item Shop \n(2) Billing \n(3) Log Out \n..> "))
@@ -51,5 +53,5 @@ else:
         else:
             print("OPTION NOT AVAILABLE ")        
     
-
+#good bye
 print("THANK YOU FOR USING OUR SOFTWARE...\nHAVE A NICE DAY! :) ")   

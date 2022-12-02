@@ -1,7 +1,8 @@
 #Importing modules
 import pickle
-#Defininng the function
 
+#Defininng the functions
+#function 1
 def Info_display():
     print('Info:')
     info= open("Backend/shop_information.dat","rb")
@@ -15,7 +16,7 @@ def Info_display():
     
     info.close()
 
-
+#function 2
 def Info_input():
     print('Info:')
     Store_id = input("Enter store id :")
@@ -31,7 +32,7 @@ def Info_input():
     print("Information updated!")
     Info.close()
 
-
+#information menu
 def Information():
     while True:
         x=int(input("\n(1) Display info\n(2) Change info\n(3) Exit\n..> "))
@@ -51,7 +52,8 @@ def Information():
         else:
             print("Wrong input!")
             break
-        
+
+#gets customer info to make bill        
 def customer_info():
     print("\nBilling details:-")
     name=input("Enter your name: ")

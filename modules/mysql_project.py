@@ -2,13 +2,25 @@
 from modules.mysql_init import *
 from beautifultable import BeautifulTable
 
+#check stocks
 def check_stock(code):
     mysql_csr.execute(f"SELECT STOCK from stocks where ITEM_CODE='{code}' ")
     data=mysql_csr.fetchall()
     for row in data:
         return int(row[0])
 
+#display specific stock
+def getstock(code):
+    mysql_csr.execute(f"SELECT * from stocks where ITEM_CODE='{code}' ")
+    data=mysql_csr.fetchall()
+    table = BeautifulTable()
+    table.columns.header = ["ITEM_CODE",'NAME','BRAND','PRICE','STOCK','STATUS',"SUPPLIER_ID"]
+    for row in data:
+        table.rows.append(row)
+    print(table)
 
+
+#display perticular rec
 def displaySpecific(field,table,exp):
     tb=BeautifulTable()
     mysql_csr.execute(f"SELECT DISTINCT({field}) FROM {table} order by {field}")
@@ -18,6 +30,7 @@ def displaySpecific(field,table,exp):
         tb.rows.append(i)
     print(tb)
 
+#returns a specific rec
 def getrec(code,field):
     mysql_csr.execute(f"select * from {field} where ITEM_CODE ='{code}'")
     data = mysql_csr.fetchall()
@@ -27,7 +40,7 @@ def getrec(code,field):
         table.rows.append(i)
     return table
 
-
+#gets all the rec
 def getall():
     mysql_csr.execute("select * from productInfo order by ITEM_NAME ")
     data = mysql_csr.fetchall()
@@ -37,7 +50,7 @@ def getall():
         table.rows.append(i)
     return table
 
-#This function returns the list of the selected item                      
+#returns the list of the selected item                      
 def getproduct(code,field):
     mysql_csr.execute(f'SELECT * from {field} ')
     data=mysql_csr.fetchall()
@@ -45,7 +58,7 @@ def getproduct(code,field):
         if code.upper()==row[0].upper():
             return list(row)
 
-#This function displays the information of the selected item                      
+#displays the information of the selected item                      
 def displayitem(code,field):
     mysql_csr.execute(f'SELECT * from {field}')
     data=mysql_csr.fetchall()
@@ -55,7 +68,20 @@ def displayitem(code,field):
     else:
         return 1
 
-#This function will add the items in a bill 
+#update a sepcific field 
+def update(code,field,exp):
+    print("Selected Record:-")
+    print(getrec(code,'productInfo'))
+    try:
+        new=input("Enter New "+exp+": ")
+        mysql_csr.execute(f"UPDATE productinfo SET {field} = '{new}' WHERE ITEM_CODE = '{code}' ")
+        ms.commit()
+        print("Entry updated!")
+        print()
+    except:
+        print("Some error occured!\nTry again later...")
+
+#add the items in a bill 
 def append(code,bill):
     a=displayitem(code,'productInfo')
     print("\nItem description :>\n")
@@ -77,7 +103,7 @@ def append(code,bill):
     else:
         print("Item code not found!")
 
-#This function removes a particular item or a specific quantity you want
+#removes an item or a specific quantity 
 def remove(code,bill):
     for i in bill:
         if i[0] == str(code.upper()):
@@ -103,15 +129,8 @@ def remove(code,bill):
         else:
             print("Wrong input")
 
-def getstock(code):
-    mysql_csr.execute(f"SELECT * from stocks where ITEM_CODE='{code}' ")
-    data=mysql_csr.fetchall()
-    table = BeautifulTable()
-    table.columns.header = ["ITEM_CODE",'NAME','BRAND','PRICE','STOCK','STATUS',"SUPPLIER_ID"]
-    for row in data:
-        table.rows.append(row)
-    print(table)
 
+#gets supplier info
 def supplier_info(mode,code=None):
     query="SELECT ITEM_CODE,ITEM_NAME,BRAND,SUPPLIER_ID,SUPP_NAME FROM stocks,supplier WHERE stocks.SUPPLIER_ID=supplier.SUPP_ID "
     if mode==0:
@@ -144,16 +163,6 @@ def supplier_info(mode,code=None):
         print("not a valid mode!")
 
 
-def update(code,field,exp):
-    print("Selected Record:-")
-    print(getrec(code,'productInfo'))
-    try:
-        new=input("Enter New "+exp+": ")
-        mysql_csr.execute(f"UPDATE productinfo SET {field} = '{new}' WHERE ITEM_CODE = '{code}' ")
-        ms.commit()
-        print("Entry updated!")
-        print()
-    except:
-        print("Some error occured!\nTry again later...")
+
 
 

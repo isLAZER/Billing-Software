@@ -1,6 +1,7 @@
 #Importing modules
 import pickle 
 
+#settings menu
 def setting():
     while True:
         c=input('(1) Change admin username and password\n[Press X to exit]\n..> ')

@@ -3,7 +3,7 @@ from modules.mysql_init import *
 from modules.mysql_project import *
 from beautifultable import BeautifulTable
 
-
+#register menu
 def register():
     while True:
         c=int(input("\n(1) Check Profit on a Product\n(2) Calculate Target amount to earn\n(3) Check Amount Paid to the suppliers\n(4) VIew profit chart \n(5) Exit\n..> "))

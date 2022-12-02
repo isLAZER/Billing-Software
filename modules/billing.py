@@ -15,7 +15,7 @@ def make_table(tb):
     total=0
     table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
     for i in tb:
-        newlist=[i[1],i[2],i[3],i[4],i[5],i[6]]
+        newlist=i[1:]
         table.rows.append(newlist)
         total+=i[6]
     table.rows.append([" "," "," "," ","TOTAL",total])
@@ -187,8 +187,6 @@ def checkout(table):
     print('Payment method: ',details[2])
     print()
     print('--------------------------------------------------------------------------------')
-    print()
-    print()
     print()
     print(date_time)
     print(table)
