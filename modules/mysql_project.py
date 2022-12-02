@@ -73,8 +73,7 @@ def append(code,bill):
             print("ITEM ADDED TO THE BILL\n")
             return bill
         else:
-            print("Entered quantity is more than that in stock\n")
-            
+            print("Entered quantity is more than that in stock\n")      
     else:
         print("Item code not found!")
 

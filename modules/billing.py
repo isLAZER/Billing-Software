@@ -10,6 +10,17 @@ from modules.Info_doc import customer_info
 now = datetime.now()
 
 
+def make_table(list):
+    table=BeautifulTable()
+    total=0
+    table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
+    for i in list:
+        total+=i[5]
+        table.rows.append(i)
+    table.rows.append([" "," "," "," ","TOTAL",total])
+    return table
+
+
 def item_shop():
     while True:
         print("Search:-")    
@@ -118,8 +129,7 @@ def billing():
     bill=[]
     while True:
         print()
-        print("{YOUR CART}")
-        x=int(input('(1) Add product to cart\n(2) Remove product from cart\n(3) Displaying information of a particular item\n(4) Displaying the items in cart\n(5) CHECKOUT!\n..> '))
+        x=int(input('[ YOUR CART ]\n(1) Add product to cart\n(2) Remove product from cart\n(3) Display all items in the cart\n(4) Display details of a particular item\n(5) Proceed to checkout\n..> '))
         
         #To append an item into the bill
         if x==1:
@@ -130,66 +140,63 @@ def billing():
             code=input('Enter the code of the item you want to remove from the bill: ')   
             remove(code,bill)
         #To display information of an item    
-        elif x==3:
-            code=input('Enter the code of that item whose information is to be displayed: ')
-            print(str(displayitem(code)))
-        #Shows all items in your cart
         elif x==4:
-
-            table=BeautifulTable()
-            total=0
+            code=input('Enter the code of that item whose information is to be displayed: ')
+            print(str(displayitem(code,'productInfo')))
+        #Shows all items in your cart
+        
+        elif x==3:
             print("CART:-")
-            table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
-            for i in bill:
-                print(i)
-                total+=i[5]
-                table.rows.append(i)
+            print(make_table(bill))
 
-            table.rows.append([" "," "," "," ","TOTAL",total])
-            print(table)
-
-        #Below will checkout
         elif x==5:
-            if bill!={}:
-                details=customer_info()
-                import pickle
-                infofile =open("Backend/shop_information.dat","rb")
-                try:
-                    info=pickle.load(infofile)
-                except:
-                    pass
-                infofile.close()
-                
-                date_time = now.strftime("%d/%m/%Y                                             %H:%M:%S")
-                print('--------------------------------------------------------------------------------')
-                print()
-                print('Customer Name: ',details[0])
-                print('Customer Phone no.: ',details[1])
-                print('Payment method: ',details[2])
-                print()
-                print('--------------------------------------------------------------------------------')
-                print()
-                print('STORE_ID: ',info[0])
-                print('GST ID: ',info[4])
-                print()
-                print(date_time)
-                print(table)
-                print('BILL')
-                print('ADDRESS: ',info[3])
-                print('CONTACT: ',info[1])
-                print()
-                print("THANK YOU FOR VISITING OUR STORE \nHAVE A NICE DAY!")
-                print()
-                print('--------------------------------------------------------------------------------')
-                break
+            if bill!=[]:
+                c=input("\n> Are you satisfied with your cart?(Y/N) ")
+                if c=='y' or c=='Y':
+                    return make_table(bill)
+                else:
+                    continue
             else:
                 print("NO ITEM IN THE CART!")
-        elif x=='X'or x=='x':
-            exit()
+                continue
         else:
-            print("Entered option is not in menu")        
-    
+            print("Entered option is not in menu")
+            continue
 
+def checkout(table):
+    print()
+    details=customer_info()
+    import pickle
+    infofile =open("Backend/shop_information.dat","rb")
+    try:
+        info=pickle.load(infofile)
+    except:
+        pass
+    infofile.close()
+    
+    date_time = now.strftime("date:%d/%m/%Y\ntime:%H:%M:%S")
+    print()
+    print('--------------------------------------------------------------------------------')
+    print()
+    print('Customer Name: ',details[0])
+    print('Customer Phone no.: ',details[1])
+    print('Payment method: ',details[2])
+    print()
+    print('--------------------------------------------------------------------------------')
+    print()
+    print('STORE_ID: ',info[0])
+    print('GST ID: ',info[4])
+    print()
+    print(date_time)
+    print(table)
+    print('BILL')
+    print('ADDRESS: ',info[3])
+    print('CONTACT: ',info[1])
+    print()
+    print("THANK YOU FOR VISITING OUR STORE \nHAVE A NICE DAY!")
+    print()
+    print('--------------------------------------------------------------------------------')
+    print()
 
             
         

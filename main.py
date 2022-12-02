@@ -45,7 +45,8 @@ else:
         if c==1:
             item_shop()
         elif c==2:
-            billing()
+            a=billing()
+            checkout(a)
             break
         elif c==3:
             break

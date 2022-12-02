@@ -53,6 +53,7 @@ def Information():
             break
         
 def customer_info():
+    print("\nBilling details:-")
     name=input("Enter your name: ")
     contact=int(input("Enter youe phone number: "))
     pay=int(input("Enter payment method\n[> (0) - Cash\n > (1) - Online\n > (2) - Debit/Credit ]\n..> "))
