@@ -21,8 +21,7 @@ if user=="ADMIN":
             stocks()
             break
         elif c==3:
-            #cash register in work!
-            break
+            register()
         elif c==4:
             Information()
         elif c==5:

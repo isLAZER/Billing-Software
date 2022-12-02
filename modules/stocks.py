@@ -11,11 +11,11 @@ def shop():
         x=int(input('(1) VIEW THE ITEM SHOP\n(2) ADD NEW ITEM ENTRY\n(3) REMOVE ITEM ENTRY\n(4) UPDATE AN ENTRY\n(5) Exit\n..> '))
         #display item shop
         if x==1:
-            mysql_csr.execute('SELECT * from itemshop')
+            mysql_csr.execute('SELECT * from productinfo')
             data=mysql_csr.fetchall()
             count=mysql_csr.rowcount
             table = BeautifulTable()
-            table.columns.header=["ITEM_CODE",'ITEM_NAME','BRAND','CATEGORY','PRICE','DISCOUNT']
+            table.columns.header=["ITEM_CODE",'ITEM_NAME','BRAND','PRICE','DISCOUNT','CATEGORY']
             if count == 0:
                 print("No Items in shop currently!")
             else:
@@ -31,7 +31,7 @@ def shop():
             i_price =input("Enter the rate per item: ")
             i_catg=input('Enter the category of that item: ')
             i_dis=input("Enter the discount percentage : ")
-            mysql_csr.execute(f"insert into productInfo values('{i_code}','{i_name}',{i_catg},'{i_price}','{i_dis}%','{i_brand}')")
+            mysql_csr.execute(f"insert into productInfo values('{i_code}','{i_name}','{i_catg}','{i_price}','{i_dis}','{i_brand}')")
             ms.commit()
             print("ITEM ADDED TO DATABASE!")
         
@@ -46,7 +46,8 @@ def shop():
                 print("AN ERROR OCCURRED\nFAILED TO DELETE ENTRY!")
         
         #complex updating part 
-
+        elif x==5:
+            break
 
 def stocks():
     while True:
