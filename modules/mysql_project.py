@@ -63,13 +63,13 @@ def append(code,bill):
     z=check_stock(code)
     if a!=1:
         print(str(a))
-        quantity_utilised = int(input("Enter the number of items you want: "))
+        quantity_utilised = int(input("Enter quantity: "))
         if z>=quantity_utilised:
             mysql_csr.execute(f'update stocks set stock =stock-{quantity_utilised} where Item_code = "{code}";')
             ms.commit()
             z=quantity_utilised
             total=z*n[3]
-            bill.append([n[1],n[3],n[2],n[5],z,total])
+            bill.append([n[0],n[1],n[3],n[2],n[5],z,total])
             print("ITEM ADDED TO THE BILL\n")
             return bill
         else:
@@ -79,26 +79,29 @@ def append(code,bill):
 
 #This function removes a particular item or a specific quantity you want
 def remove(code,bill):
-    print("(1)Remove all \n(2)Remove selected quantity\n")
-    ch=input("Choose from above:")
-    if ch=='1':
-        bill.pop(code)
-        print("ITEM REMOVED")
-    elif ch =='2':
-        n= int(input("How many products you want to remove:"))
-        if n <bill[code][4]:
-            bill[code][4]-=n
-            mysql_csr.execute(f'update productInfo set stocks =stocks+{n} where Item_code = "{code.upper()}";')
-            ms.commit()
-            print(f'{n} number of items removed')
-        elif n ==bill[code][4]:
-            bill.pop(code)
-            mysql_csr.execute(f'update productInfo set stocks =stocks+{n} where Item_code = "{code.upper()}";')
-            ms.commit()
-            print("ITEM REMOVED")
+    for i in bill:
+        if i[0] == str(code.upper()):
+            ch=int(input("(1)Remove all \n(2)Remove selected quantity\n..> "))
+            if ch==1:
+                bill.remove(i)
+                print("ITEMS REMOVED")
+            elif ch==2:
+                print("Current quantity: ",str(i[5]))
+                n = int(input("Enter quantity to remove: "))
+                if n < i[5]:
+                    i[5] -= n
+                    mysql_csr.execute(f'update stocks set stock = stock+{n} where Item_code = "{code}" ')
+                    ms.commit()
+                    print(f'{n} items removed')
+                elif n == bill[5]:
+                    bill.pop(i)
+                    mysql_csr.execute(f'update stocks set stock = stock+{n} where Item_code = "{code}" ')
+                    ms.commit()
+                    print("ITEM REMOVED")
+                else:
+                    print("ENTERED QUANTITY IS MORE THAN THAT WHAT YOU HAVE IN YOUR CART!!!\n")
         else:
-            print("ENTERED QUANTITY IS MORE THAN THAT WHAT YOU HAVE IN YOUR CART!!!\n")
-
+            print("Wrong input")
 
 def getstock(code):
     mysql_csr.execute(f"SELECT * from stocks where ITEM_CODE='{code}' ")

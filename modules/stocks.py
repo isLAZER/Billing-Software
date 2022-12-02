@@ -62,9 +62,10 @@ def shop():
                     update(code,'DISCOUNT','Discount %')
                 else:
                     print('Wrong input!')
+                    continue
                 print("Updated Record:-\n",getrec(code,'productInfo'))
                 print()
-                ch=input("What to continue updating?(Y/N): ")
+                ch=input("Want to continue updating?(Y/N): ")
                 if ch=='y' or ch=='Y':
                     print()
                     continue  

@@ -18,8 +18,6 @@ password_in = input("Enter your password: ")
 #Login 
 user=login(username_in,password_in)
 
-
-
 #Menu 
 if user=="ADMIN":
     while True:

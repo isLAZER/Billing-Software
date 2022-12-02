@@ -10,7 +10,8 @@ from modules.Info_doc import customer_info
 now = datetime.now()
 
 
-def make_table(list):
+def make_table(tb):
+    list=[tb[1],tb[2],tb[3],tb[4],tb[5],tb[6]]
     table=BeautifulTable()
     total=0
     table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
@@ -146,8 +147,12 @@ def billing():
         #Shows all items in your cart
         
         elif x==3:
-            print("CART:-")
-            print(make_table(bill))
+            if bill!=[]:
+                print("CART:-")
+                print(make_table(bill))
+            else:
+                print("NO ITEM IN THE CART!")
+                continue
 
         elif x==5:
             if bill!=[]:
@@ -184,14 +189,14 @@ def checkout(table):
     print()
     print('--------------------------------------------------------------------------------')
     print()
-    print('STORE_ID: ',info[0])
-    print('GST ID: ',info[4])
+    print()
     print()
     print(date_time)
     print(table)
-    print('BILL')
+    print()
+    print('STORE_ID: ',info[0])
     print('ADDRESS: ',info[3])
-    print('CONTACT: ',info[1])
+    print('CONTACT: ',info[2])
     print()
     print("THANK YOU FOR VISITING OUR STORE \nHAVE A NICE DAY!")
     print()
