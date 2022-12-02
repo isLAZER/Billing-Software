@@ -3,18 +3,6 @@ from modules.mysql_init import *
 from modules.mysql_project import *
 from beautifultable import BeautifulTable
 
-def make_table_with_query(query,lst):
-    code=input("Enter the product code to be checked: ")
-    print("Product status:-")
-    mysql_csr.execute(query)
-    data=mysql_csr.fetchall()
-    table = BeautifulTable()
-    table.columns.header=lst
-    for row in data:
-        table.rows.append(row)
-    print(table)
-q1="SELECT ITEM_CODE,ITEM_NAME,BRAND,PROFITS FROM register where ITEM_CODE ='{code}'"           
-l=["ITEM_CODE",'NAME','BRAND','PROFIT']
 
 def register():
     while True:
