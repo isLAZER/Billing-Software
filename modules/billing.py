@@ -13,16 +13,10 @@ def item_shop():
 
         #item search
         if c==1:
-            tb=BeautifulTable()
-            mysql_csr.execute(f"SELECT DISTINCT(ITEM_NAME) FROM itemshop order by ITEM_CODE ")
-            data = mysql_csr.fetchall()
-            tb.columns.header = ["Item list"]
-            for i in data:
-                tb.rows.append(i)
-            print(tb)
+            displaySpecific("ITEM_NAME","itemshop","item")
             try:
                 itm = input("Enter item name to be searched: ")
-                mysql_csr.execute("SELECT"+query+f"and ITEM_NAME='{itm}' order by ITEM_CODE")
+                mysql_csr.execute(f"SELECT * from productInfo where ITEM_NAME='{itm}' order by ITEM_CODE ")
                 data = mysql_csr.fetchall()
                 count=mysql_csr.rowcount
                 table = BeautifulTable()
@@ -48,16 +42,10 @@ def item_shop():
         
         #brand search
         elif c==2:
-            tb=BeautifulTable()
-            mysql_csr.execute(f"SELECT DISTINCT(BRAND_NAME) FROM brand order by BRAND_NAME ")
-            data = mysql_csr.fetchall()
-            tb.columns.header = ["Brand list"]
-            for i in data:
-                tb.rows.append(i)
-            print(tb)
+            displaySpecific("BRAND_NAME","BRAND","Brand")
             try:
                 itm = input("Enter Brand name to be searched: ")
-                mysql_csr.execute("SELECT"+query+f"and brand.BRAND_NAME='{itm}' order by ITEM_NAME ")
+                mysql_csr.execute(f"SELECT * from productInfo where BRAND ='{itm}' order by ITEM_NAME ")
                 data = mysql_csr.fetchall()
                 count=mysql_csr.rowcount
                 table = BeautifulTable()
@@ -74,16 +62,11 @@ def item_shop():
  
         #category search
         elif c==3:
-            tb=BeautifulTable()
-            mysql_csr.execute(f"SELECT DISTINCT(CATEGORY_NAME) FROM category order by CATEGORY_NAME ")
-            data = mysql_csr.fetchall()
-            tb.columns.header = ["Category list"]
-            for i in data:
-                tb.rows.append(i)
+            displaySpecific("CATEGORY_NAME","CATEGORY","Category")
             print(tb)
             try:
                 itm = input("Enter Category to be searched: ")
-                mysql_csr.execute("SELECT"+query+f"and category.CATEGORY_NAME='{itm}' order by ITEM_NAME asc ")
+                mysql_csr.execute(f"SELECT * from productInfo where CATEGORY ='{itm}' order by ITEM_NAME ")
                 data = mysql_csr.fetchall()
                 count=mysql_csr.rowcount
                 table = BeautifulTable()
@@ -99,13 +82,8 @@ def item_shop():
                 print("No item Found :(")
 
         elif c==4:
-            mysql_csr.execute("SELECT"+query+"order by ITEM_CODE ")
-            data = mysql_csr.fetchall()
-            table=BeautifulTable()
-            table.columns.header = ['CODE','NAME','CATEGORY','PRICE', 'DISCOUNT','BRAND']
-            for i in data:
-                table.rows.append(i)
-                print(table)
+            tb=getall()
+            print(tb)
             
         elif c==0:
             print("Search completed!")
@@ -126,11 +104,13 @@ def item_shop():
     
 
 #Defining the function 
-def billing():    
+def billing():
+
     bill={}
     while True:
         print()
-        x=input('(1) Add product to cart\n(2) Remove product from cart\n(3) Displaying information of a particular item\n(4) Displaying the items in cart\n(5) CHECKOUT\n>>> ')
+        print("{YOUR CART}")
+        x=int(input('(1) Add product to cart\n(2) Remove product from cart\n(3) Displaying information of a particular item\n(4) Displaying the items in cart\n(5) CHECKOUT!\n..> '))
         
         #To append an item into the bill
         if x==1:
