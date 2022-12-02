@@ -3,9 +3,12 @@ from modules.mysql_init import *
 from  modules.mysql_project import *
 from beautifultable import BeautifulTable
 from datetime import datetime
+from modules.Info_doc import customer_info
 
+
+#setting date and time
 now = datetime.now()
-date_time = now.strftime("%d/%m/%Y %H:%M:%S")
+
 
 def item_shop():
     while True:
@@ -89,8 +92,8 @@ def item_shop():
             print(tb)
             x=input("Proceed to billing?(Y/N): ")
             if x=='y' or x=='Y':
-                billing()
-                break
+                print("Search completed!")
+                break  
             else:
                 continue
             
@@ -102,7 +105,7 @@ def item_shop():
             continue
 
         #continue option
-        x=input("Proceed to billing?(Y/N): ")
+        x=input("Continue Search?(Y/N): ")
         if x=='y' or x=='Y':
             continue
         else:
@@ -148,24 +151,36 @@ def billing():
         #Below will checkout
         elif x==5:
             if bill!={}:
+                details=customer_info()
                 import pickle
                 infofile =open("Backend/shop_information.dat","rb")
                 try:
-                    r=pickle.load(infofile)
+                    info=pickle.load(infofile)
                 except:
                     pass
                 infofile.close()
                 
+                date_time = now.strftime("%d/%m/%Y                                             %H:%M:%S")
+                print('--------------------------------------------------------------------------------')
                 print()
-                print('STORE_ID: ',r[0])
+                print('Customer Name: ',details[0])
+                print('Customer Phone no.: ',details[1])
+                print('Payment method: ',details[2])
+                print()
+                print('--------------------------------------------------------------------------------')
+                print()
+                print('STORE_ID: ',info[0])
+                print('GST ID: ',info[4])
                 print()
                 print(date_time)
                 print(table)
-                print('ADDRESS: ',r[2])
-                print('MOBILE_NUMBER',r[1])
+                print('BILL')
+                print('ADDRESS: ',info[3])
+                print('CONTACT: ',info[1])
                 print()
                 print("THANK YOU FOR VISITING OUR STORE \nHAVE A NICE DAY!")
                 print()
+                print('--------------------------------------------------------------------------------')
                 break
             else:
                 print("NO ITEM IN THE CART!")

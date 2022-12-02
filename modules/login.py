@@ -36,5 +36,3 @@ def login(user,passwd):
             return str(user)
 
 credentials.close()
-
-

@@ -20,7 +20,7 @@ def Info_input():
     print('Info:')
     Store_id = input("Enter store id :")
     Store_Name = str(input("Enter the store name :"))
-    Store_Contact = str(input("Enter the store contact number"))
+    Store_Contact = str(input("Enter the store contact number: "))
     Store_Address=input('Enter the Store Address: ')
     Store_GSTID=input('Enter GST invoice id: ')
     Store_Discription=input('Enter Store description: ')
@@ -52,4 +52,16 @@ def Information():
             print("Wrong input!")
             break
         
-        
+def customer_info():
+    name=input("Enter your name: ")
+    contact=int(input("Enter youe phone number: "))
+    pay=int(input("Enter payment method\n[> (0) - Cash\n > (1) - Online\n > (2) - Debit/Credit ]\n..> "))
+    if pay==0:
+        mode='Cash'
+    if pay==1:
+        mode='Online'
+    elif pay==2:
+        mode='Debit/Credit'
+
+    data=[name,contact,mode]
+    return data  
