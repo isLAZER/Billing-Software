@@ -24,13 +24,13 @@ def make_table(tb):
 
 def item_shop():
     while True:
-        print("Search:-")    
         print()
-        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n(4) Display details of a particular item\n(5) VIEW FULL ITEM SHOP\n(5) Exit\n..> "))
+        print("")    
+        c = int(input("(1) VIEW FULL ITEM SHOP\n\nSearch options:-\n(2) Search by Item name \n(3) Search by Brand name\n(4) Search by Category\n(5) Exit\n..> "))
         print()
 
         #item search
-        if c==1:
+        if c==2:
             displaySpecific("ITEM_NAME","productInfo","item")
             try:
                 itm = input("Enter item name to be searched: ")
@@ -59,7 +59,7 @@ def item_shop():
 
         
         #brand search
-        elif c==2:
+        elif c==3:
             displaySpecific("BRAND","productInfo","Brand")
             try:
                 itm = input("Enter Brand name to be searched: ")
@@ -79,7 +79,7 @@ def item_shop():
                 print("No item Found :(")
  
         #category search
-        elif c==3:
+        elif c==4:
             displaySpecific("CATEGORY","productinfo","Category")
             try:
                 itm = input("Enter Category to be searched: ")
@@ -97,16 +97,14 @@ def item_shop():
                     print(table) 
             except:
                 print("No item Found :(")
-        elif c==4:
-            code=input('Enter the code of that item whose information is to be displayed: ')
-            print(str(displayitem(code,'productInfo')))
 
-        elif c==5:
+        elif c==1:
             tb=getall()
             print(tb)
             x=input("Proceed to billing?(Y/N): ")
             if x=='y' or x=='Y':
                 print("Search completed!")
+                print("\nClick on My Cart!")
                 break  
             else:
                 continue
@@ -132,7 +130,7 @@ def billing():
     bill=[]
     while True:
         print()
-        x=int(input('[ YOUR CART ]\n(1) Add product to cart\n(2) Remove product from cart\n(3) Display all items in the cart\n(4) Proceed to checkout\n..> '))
+        x=int(input('[ YOUR CART ]\n(1) Add product to cart\n(2) Remove product from cart\n(3) Display all items in the cart\n(4) Display item code list\n(5) Proceed to checkout\n..> '))
         
         #To append an item into the bill
         if x==1:
@@ -143,7 +141,6 @@ def billing():
             code=input('\nEnter the code of the item you want to remove from the bill: ')   
             remove(code,bill)
                
-    
         #Shows all items in your cart
         elif x==3:
             if bill!=[]:
@@ -152,8 +149,17 @@ def billing():
             else:
                 print("NO ITEM IN THE CART!")
                 continue
-
+        #Show item code list
         elif x==4:
+            tb=BeautifulTable()
+            mysql_csr.execute(f"SELECT ITEM_CODE,ITEM_NAME FROM productinfo order by ITEM_NAME ")
+            data = mysql_csr.fetchall()
+            tb.columns.header = [" Item Code "," List:- "]
+            for i in data:
+                tb.rows.append(i)
+            print(tb)
+
+        elif x==5:
             if bill!=[]:
                 c=input("\n> Are you satisfied with your cart?(Y/N) ")
                 if c=='y' or c=='Y':
