@@ -155,7 +155,6 @@ def remove(code,bill):
                 a=getproduct(code,'productInfo')
                 total=b*a[2]
                 bill.append([a[0],a[1],a[4],a[5],b,total,a[2]])
-                print(bill)
                 return bill
         else:
             continue
