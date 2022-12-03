@@ -150,9 +150,6 @@ def stocks():
                         print(f"SOME ERROR HAPPENED AT OUR END!\nPLEASE RETRY ")
                         continue
 
-
-
-
                 ch=input("\nWhat to continue updating?(Y/N): ")
                 if ch=='y' or ch=='Y':
                     print()

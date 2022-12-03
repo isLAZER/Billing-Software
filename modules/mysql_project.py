@@ -8,7 +8,7 @@ stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK 
 categorystockquery="SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK,CATEGORY FROM productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE "
 
 def stock_cat(code):
-    mysql_csr.execute(categorystockquery+f"AND CATEGORY = {code}")
+    mysql_csr.execute(categorystockquery+f"AND productinfo.CATEGORY ='{code}'")
     data=mysql_csr.fetchall()
     table = BeautifulTable()
     table.columns.header=["CODE",'NAME','BRAND','STOCK','CATEGORY']
@@ -36,7 +36,7 @@ def check_stock(code=None):
 
 #display specific stock
 def getstockinfo(code):
-    stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
+    stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
     mysql_csr.execute(stockviewquery+f" AND productinfo.ITEM_CODE ='{code}' ")
     data=mysql_csr.fetchall()
     table = BeautifulTable()
