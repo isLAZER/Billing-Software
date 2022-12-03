@@ -2,19 +2,62 @@
 from modules.mysql_init import *
 from beautifultable import BeautifulTable
 
-#check stocks
-def check_stock(code):
-    mysql_csr.execute(f"SELECT STOCK from stocks where ITEM_CODE='{code}' ")
-    data=mysql_csr.fetchall()
-    for row in data:
-        return int(row[0])
 
-#display specific stock
-def getstock(code):
-    mysql_csr.execute(f"SELECT * from stocks where ITEM_CODE='{code}' ")
+#stock queries
+stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
+categorystockquery="SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK,CATEGORY FROM productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE "
+
+def stock_cat(code):
+    mysql_csr.execute(categorystockquery+f"AND CATEGORY = {code}")
     data=mysql_csr.fetchall()
     table = BeautifulTable()
-    table.columns.header = ["ITEM_CODE",'NAME','BRAND','PRICE','STOCK','STATUS',"SUPPLIER_ID"]
+    table.columns.header=["CODE",'NAME','BRAND','STOCK','CATEGORY']
+    for i in data:
+        table.rows.append(i)
+    return table
+
+def status_list(data):
+    lst=stock_status()
+    for i in lst:
+        a=list(data)
+        a.append(i)
+    return a
+
+
+def execute(simple_query,header_list):
+    mysql_csr.execute(simple_query)
+    data=mysql_csr.fetchall()
+    table = BeautifulTable()
+    table.columns.header = header_list
+    for row in data:
+        table.rows.append(row)
+    print(table)
+
+
+#check stocks
+def check_stock(mode=0,code=None):
+    query=('SELECT STOCK from stocks')
+    if mode==0 and code==None:
+        mysql_csr.execute(query)
+        data=mysql_csr.fetchall()
+        l=[]
+        for row in data:
+            l.append(int(row[0]))
+        return l
+    elif mode==0:
+        mysql_csr.execute(query+f"where ITEM_CODE='{code}' ")
+        data=mysql_csr.fetchall()
+        for row in data:
+            return int(row[0])
+
+
+#display specific stock
+def getstockinfo(code):
+    stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
+    mysql_csr.execute(stockviewquery+f"AND productinfo.ITEM_CODE ='{code}' ")
+    data=mysql_csr.fetchall()
+    table = BeautifulTable()
+    table.columns.header = ["CODE",'NAME','BRAND','ITEMS SOLD','STOCK']
     for row in data:
         table.rows.append(row)
     print(table)
@@ -31,11 +74,11 @@ def displaySpecific(field,table,exp):
     print(tb)
 
 #returns a specific rec
-def getrec(code,field):
-    mysql_csr.execute(f"select * from {field} where ITEM_CODE ='{code}'")
+def getproductinfo(code):
+    mysql_csr.execute(f"select * from productinfo where ITEM_CODE ='{code}'")
     data = mysql_csr.fetchall()
     table=BeautifulTable()
-    table.columns.header = ['CODE','NAME','CATEGORY','PRICE','DISCOUNT','BRAND']
+    table.columns.header = ['CODE','NAME','PRICE','DISCOUNT','BRAND','CATEGORY']
     for i in data:
         table.rows.append(i)
     return table
@@ -45,7 +88,7 @@ def getall():
     mysql_csr.execute("select * from productInfo order by ITEM_NAME ")
     data = mysql_csr.fetchall()
     table=BeautifulTable()
-    table.columns.header = ['CODE','NAME','CATEGORY','PRICE','DISCOUNT','BRAND']
+    table.columns.header = ['CODE','NAME','PRICE','DISCOUNT','BRAND','CATEGORY']
     for i in data:
         table.rows.append(i)
     return table
@@ -71,7 +114,7 @@ def displayitem(code,field):
 #update a sepcific field 
 def update(code,field,exp):
     print("Selected Record:-")
-    print(getrec(code,'productInfo'))
+    print(getproductinfo(code,'productInfo'))
     try:
         new=input("Enter New "+exp+": ")
         mysql_csr.execute(f"UPDATE productinfo SET {field} = '{new}' WHERE ITEM_CODE = '{code}' ")
@@ -132,35 +175,51 @@ def remove(code,bill):
 
 #gets supplier info
 def supplier_info(mode,code=None):
-    query="SELECT ITEM_CODE,ITEM_NAME,BRAND,SUPPLIER_ID,SUPP_NAME FROM stocks,supplier WHERE stocks.SUPPLIER_ID=supplier.SUPP_ID "
+    query="SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,SUPP_NAME,CONTACT FROM supplier,productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND stocks.SUPPLIER_ID=supplier.SUPP_ID"
+    #supplier basic
     if mode==0:
-        mysql_csr.execute("SELECT SUPP_ID,SUPP_NAME,CONTACT,LOCATION FROM supplier")
+        mysql_csr.execute("SELECT * FROM supplier")
         data=mysql_csr.fetchall()
         table = BeautifulTable()
         table.columns.header = ['SUPPLIER_ID','SUPPLIER_NAME','CONTACT','LOACTION']
         for row in data:
-            table.rows.append(row)
+            newlist=row[1:]
+            table.rows.append(newlist)
         print(table) 
-
+    #all supplier info 
     elif mode==1:
         mysql_csr.execute(query)
         data=mysql_csr.fetchall()
         table = BeautifulTable()
-        table.columns.header = ['ITEM_CODE','NAME','BRAND','SUPPLIER_ID','SUPPLIER_NAME']
+        table.columns.header = ['CODE','NAME','BRAND','SUPPLIER_NAME','CONTACT']
         for row in data:
             table.rows.append(row)
         print(table)
-
+    #specific supplier info
     elif mode==2:
-        mysql_csr.execute(query+f"and ITEM_CODE='{code}'")
+        mysql_csr.execute(query+f"and productinfo.ITEM_CODE='{code}'")
         data=mysql_csr.fetchall()
         table = BeautifulTable()
-        table.columns.header = ['ITEM_CODE','NAME','BRAND','SUPPLIER_ID','SUPPLIER_NAME']
+        table.columns.header = ['CODE','NAME','BRAND','SUPPLIER_NAME','CONTACT']
         for row in data:
             table.rows.append(row)
         return table  
     else:
         print("not a valid mode!")
+
+#get a list of stock status
+def stock_status():
+    lst=check_stock()
+    flag=[]
+    for i in lst:
+        if i<=10:
+            flag.append('Low on stock')
+        elif i==0:
+            flag.append('Out of stock')
+        else:
+            flag.append('instock')
+    return flag
+
 
 
 

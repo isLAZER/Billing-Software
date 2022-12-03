@@ -7,6 +7,7 @@ from modules.Info_doc import Information
 from modules.register import *
 from datetime import *
 
+
 #current date
 today = date.today()
 print("Today's date:", today)
@@ -22,7 +23,7 @@ user=login(username_in,password_in)
 #admin/owner menu
 if user=="ADMIN":
     while True:
-        c = int(input("\nMenu:-\n(1) Item Shop\n(2) Stocks\n(3) Cash Register\n(4) Shop details\n(5) Settings\n(6) Log Out\n..> "))    
+        c = int(input("\nMenu:-\n(1) Item Shop\n(2) Stocks\n(3) Register\n(4) Shop details\n(5) Settings\n(6) Log Out\n..> "))    
         if c==1:
             shop()
         elif c==2:
@@ -41,7 +42,7 @@ if user=="ADMIN":
 #customer menu
 else:
     while True:        
-        c = int(input("\nMenu:-\n(1) Item Shop \n(2) Billing \n(3) Log Out \n..> "))
+        c = int(input("\nMenu:-\n(1) Item Shop \n(2) My Account \n(3) Log Out \n..> "))
         if c==1:
             item_shop()
         elif c==2:

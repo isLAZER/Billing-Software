@@ -187,6 +187,8 @@ def checkout(table):
     print('Payment method: ',details[2])
     print()
     print('--------------------------------------------------------------------------------')
+    print("STORE NAME: ",info[1])
+    print()
     print()
     print(date_time)
     print(table)
@@ -199,6 +201,3 @@ def checkout(table):
     print()
     print('--------------------------------------------------------------------------------')
     print()
-
-            
-        
