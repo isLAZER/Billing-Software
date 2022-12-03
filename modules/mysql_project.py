@@ -140,6 +140,7 @@ def remove(code,bill):
             elif ch==2:
                 print("Current quantity: ",str(i[4]))
                 n = int(input("Enter quantity to remove: "))
+                b=int(i[4])-n
                 if n < i[4]:
                     i[4] -= n
                     mysql_csr.execute(f'update stocks set stock = stock+{n} where Item_code = "{code}" ')
@@ -151,12 +152,14 @@ def remove(code,bill):
                     print("ITEMs REMOVED")
                 else:
                     print("ENTERED QUANTITY IS MORE THAN THAT WHAT YOU HAVE IN YOUR CART!!!\n")
+                a=getproduct(code,'productInfo')
+                total=b*a[2]
+                bill.append([a[0],a[1],a[4],a[5],b,total,a[2]])
+                print(bill)
+                return bill
         else:
             continue
-    a=getproduct(code,'productInfo')
-    total=n*a[2]
-    bill.append([a[0],a[1],a[4],a[5],n,total,a[2]])
-    return bill
+    
 
 
 
