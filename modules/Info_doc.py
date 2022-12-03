@@ -4,7 +4,7 @@ import pickle
 #Defininng the functions
 #function 1
 def Info_display():
-    print('Info:')
+    print('\nShop Info:')
     info= open("Backend/shop_information.dat","rb")
     data=pickle.load(info)
     print('Store Id: ',data[0])
@@ -32,26 +32,6 @@ def Info_input():
     print("Information updated!")
     Info.close()
 
-#information menu
-def Information():
-    while True:
-        x=int(input("\n(1) Display info\n(2) Change info\n(3) Exit\n..> "))
-        if x==1:
-            Info_display()
-            break
-        elif x==2:
-            z=input("Press 'Y' to Confirm\n[the previous data will be lost forever]\n..> ")
-            if z=='y' or z=='Y':
-                Info_input()
-                break
-            else:
-                print("exit!")
-                break
-        elif x==3:
-            break
-        else:
-            print("Wrong input!")
-            break
 
 #gets customer info to make bill        
 def customer_info():
@@ -68,3 +48,4 @@ def customer_info():
 
     data=[name,contact,mode]
     return data  
+

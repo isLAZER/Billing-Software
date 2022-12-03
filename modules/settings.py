@@ -1,26 +1,49 @@
 #Importing modules
+from modules.Info_doc import Info_input
 import pickle 
+import calendar
+from datetime import date
+
+def cal():
+    today = date.today()
+    mth= today.month
+    yr= today.year
+    cal=calendar.month(yr,mth)
+    return cal
 
 #settings menu
 def setting():
     while True:
-        c=input('(1) Change admin username and password\n[Press X to exit]\n..> ')
+        c=input('\n(1) Change admin username and password\n(2) Change shop details\n\n[Press X to exit]\n..> ')
         if c==1:
-            file = open("Backend/admin.dat","wb")
-            username = str(input("Enter the new username : "))
-            while True:
-                password = str(input("Enter a password : "))
-                rec={'user':username,'pass':password}
-                confirm_pass=str(input("Confirm password : "))
-                if password==confirm_pass:
-                    pickle.dump(rec,file)
-                    print('Setup complete!\nUsername and Password changed...')
-                    break
-                else:
-                    print("Error!\n---Please Retry!")
-                    continue
-            print()
-            file.close()
-
+            a=input("Do you really want to change administrator settings?\n(They are very impotant for your software to work properly)\n[Press Y to confirm!]\n..> ")
+            if a=='y' or a=='Y':
+                file = open("Backend/admin.dat","wb")
+                username = str(input("Enter the new ADMIN username: "))
+                while True:
+                    password = str(input("Enter new ADMIN password: "))
+                    rec={'user':username,'pass':password}
+                    confirm_pass=str(input("Confirm password : "))
+                    if password==confirm_pass:
+                        pickle.dump(rec,file)
+                        print('Setup complete!\nUsername and Password changed...')
+                        break
+                    else:
+                        print("Error!\n---Please Retry!")
+                        continue
+                print()
+                file.close()
+            else:
+                break
+        elif c==2:
+            print("Continue with changing shop details?")
+            z=input("[the previous data will be lost forever]\nPress 'Y' to Confirm\n..> ")
+            if z=='y' or z=='Y':
+                Info_input()
+                break
+            else:
+                print("exit!")
+                break
+        
         else:
             break
