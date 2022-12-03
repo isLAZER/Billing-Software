@@ -125,8 +125,8 @@ def append(code,bill):
             mysql_csr.execute(f'update stocks set stock =stock-{quantity_utilised} where Item_code = "{code}";')
             ms.commit()
             z=quantity_utilised
-            total=z*n[3]
-            bill.append([n[0],n[1],n[3],n[2],n[5],z,total])
+            total=z*n[2]
+            bill.append([n[0],n[1],n[4],n[5],z,total,n[2]])
             print("ITEM ADDED TO THE BILL\n")
             return bill
         else:

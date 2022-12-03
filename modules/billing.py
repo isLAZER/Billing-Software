@@ -15,7 +15,7 @@ def make_table(tb):
     total=0
     table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
     for i in tb:
-        newlist=i[1:]
+        newlist=[i[1],i[6],i[3],i[2],i[4],i[5]]
         table.rows.append(newlist)
         total+=i[5]
     table.rows.append([" "," "," "," ","TOTAL",total])
@@ -177,7 +177,7 @@ def checkout(table):
         pass
     infofile.close()
     
-    date_time = now.strftime("date:%d/%m/%Y\ntime:%H:%M:%S")
+    date_time = now.strftime("date:%d/%m/%Y\ntime:%H:%M")
     print()
     print('--------------------------------------------------------------------------------')
     print()
