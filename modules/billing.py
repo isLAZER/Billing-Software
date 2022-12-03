@@ -136,12 +136,13 @@ def billing():
         
         #To append an item into the bill
         if x==1:
-            code=input('Enter the code of the item you want to add to the bill: ')
+            code=input('\nEnter the code of the item you want to add to the bill: ')
             append(code,bill)
         #To remove an item from the bill
         elif x==2:
-            code=input('Enter the code of the item you want to remove from the bill: ')   
-            remove(code,bill)   
+            code=input('\nEnter the code of the item you want to remove from the bill: ')   
+            remove(code,bill)
+               
     
         #Shows all items in your cart
         elif x==3:

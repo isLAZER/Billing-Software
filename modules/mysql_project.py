@@ -36,11 +36,11 @@ def check_stock(code=None):
 
 #display specific stock
 def getstockinfo(code):
-    stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
-    mysql_csr.execute(stockviewquery+f" AND productinfo.ITEM_CODE ='{code}' ")
+    stockviewquery2='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
+    mysql_csr.execute(stockviewquery2+f" AND productinfo.ITEM_CODE ='{code}' ")
     data=mysql_csr.fetchall()
     table = BeautifulTable()
-    table.columns.header = ["CODE",'NAME','BRAND','ITEMS SOLD','STOCK']
+    table.columns.header = ["CODE",'NAME','BRAND','STOCK']
     for row in data:
         table.rows.append(row)
     print(table)
@@ -90,7 +90,7 @@ def displayitem(code,field):
     data=mysql_csr.fetchall()
     for row in data:
         if code.upper()==row[0].upper():
-            return 'Product code: '+str(row[0])+'\nProduct name: '+str(row[1])+'\nCategory: '+str(row[2])+'\nPrice: '+str(row[3])+'\nDiscount: '+str(row[4])+'\nBrand: '+str(row[5])+'\n'
+            return 'Product code: '+str(row[0])+'\nProduct name: '+str(row[1])+'\nCategory: '+str(row[5])+'\nPrice: '+str(row[2])+'\nDiscount: '+str(row[3])+'\nBrand: '+str(row[4])+'\n'
     else:
         return 1
 
@@ -122,7 +122,7 @@ def append(code,bill):
             z=quantity_utilised
             total=z*n[2]
             bill.append([n[0],n[1],n[4],n[5],z,total,n[2]])
-            print("ITEM ADDED TO THE BILL\n")
+            print("\nITEM ADDED TO THE BILL!")
             return bill
         else:
             print("Entered quantity is more than that in stock\n")      
@@ -132,28 +132,32 @@ def append(code,bill):
 #removes an item or a specific quantity 
 def remove(code,bill):
     for i in bill:
-        if i[0] == str(code.upper()):
+        if str(i[0]) == str(code.upper()):
             ch=int(input("(1)Remove all \n(2)Remove selected quantity\n..> "))
             if ch==1:
                 bill.remove(i)
                 print("ITEMS REMOVED")
             elif ch==2:
-                print("Current quantity: ",str(i[5]))
+                print("Current quantity: ",str(i[4]))
                 n = int(input("Enter quantity to remove: "))
-                if n < i[5]:
-                    i[5] -= n
+                if n < i[4]:
+                    i[4] -= n
                     mysql_csr.execute(f'update stocks set stock = stock+{n} where Item_code = "{code}" ')
                     ms.commit()
-                    print(f'{n} items removed')
-                elif n == bill[5]:
-                    bill.pop(i)
-                    mysql_csr.execute(f'update stocks set stock = stock+{n} where Item_code = "{code}" ')
-                    ms.commit()
-                    print("ITEM REMOVED")
+                    bill.remove(i)
+                    print(f'No of items removed: {n}')
+                elif n == bill[4]:
+                    bill.remove(i)
+                    print("ITEMs REMOVED")
                 else:
                     print("ENTERED QUANTITY IS MORE THAN THAT WHAT YOU HAVE IN YOUR CART!!!\n")
         else:
-            print("Wrong input")
+            continue
+    a=getproduct(code,'productInfo')
+    total=n*a[2]
+    bill.append([a[0],a[1],a[4],a[5],n,total,a[2]])
+    return bill
+
 
 
 #gets supplier info

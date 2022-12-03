@@ -49,7 +49,7 @@ def shop():
         elif x==4:
             while True:
                 a = int(input("What do you want to Change:\n(1) Change Name\n(2) Change Brand name\n(3) Change category\n(4) Change Price\n(5) Change Discount\n..> "))
-                code=input("Enter the item code to update data: ")
+                code=input("Enter item code to update data for: ")
                 if a==1:
                     update(code,'ITEM_NAME','Name')
                 elif a==2:
@@ -100,7 +100,7 @@ def stocks():
             data=mysql_csr.fetchall()
             count=mysql_csr.rowcount
             table = BeautifulTable()
-            table.columns.header=["CODE",'NAME','BRAND','ITEMS SOLD','STOCK LEFT',' STATUS']
+            table.columns.header=["CODE",'NAME','BRAND','ITEM SOLD','STOCK LEFT',' STATUS']
             if count == 0:
                 print("No Item in stock!")
             else:
@@ -140,7 +140,7 @@ def stocks():
                     print()
                     quantity=int(input("Enter quantity to be added to all items above: "))
                     try:
-                        mysql_csr.execute(f"UPDATE productinfo,stocks SET STOCK = STOCK+{quantity} where stocks.ITEM_CODE=productinfo.ITEM_CODE AND productinfo.CATEGORY= {code} ")
+                        mysql_csr.execute(f"UPDATE productinfo,stocks SET STOCK = STOCK+{quantity} where stocks.ITEM_CODE=productinfo.ITEM_CODE AND productinfo.CATEGORY= '{code}' ")
                         ms.commit()
                         print("Amount updated!")
                         print()
@@ -150,7 +150,7 @@ def stocks():
                         print(f"SOME ERROR HAPPENED AT OUR END!\nPLEASE RETRY ")
                         continue
 
-                ch=input("\nWhat to continue updating?(Y/N): ")
+                ch=input("\nWant to continue updating?(Y/N): ")
                 if ch=='y' or ch=='Y':
                     print()
                     continue  
