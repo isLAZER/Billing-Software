@@ -16,7 +16,6 @@ def shop():
             count=mysql_csr.rowcount
             table = BeautifulTable()
             table.columns.header= ["CODE",'ITEM NAME','PRICE','DISCOUNT','BRAND','CATEGORY']
-            
             if count == 0:
                 print("No Items in shop currently!")
             else:
@@ -80,6 +79,17 @@ def shop():
             continue
 
 
+def status_list(data):
+    new=[]
+    l1=stock_status()
+    for i in data:
+        row=list(i)
+        row.append(l1[0])
+        l1.pop(0)
+        new.append(row)
+    return new
+
+
 #manage stocks
 def stocks():
     while True:
@@ -94,9 +104,9 @@ def stocks():
             if count == 0:
                 print("No Item in stock!")
             else:
-                for row in data:
-                    a=status_list(row)
-                    table.rows.append(a)   
+                newdata=status_list(data)
+                for row in newdata:
+                    table.rows.append(row)   
             print()
             print(table)
         
@@ -110,7 +120,7 @@ def stocks():
                     print()
                     quantity=int(input("Enter quantity to be added: "))
                     try:
-                        mysql_csr.execute(f"UPDATE productinfo,stocks SET STOCK = STOCK+{quantity} where stocks.ITEM_CODE=productinfo.ITEM_CODE AND productinfo.ITEM_CODE={code} ")
+                        mysql_csr.execute(f"UPDATE productinfo,stocks SET STOCK = STOCK+{quantity} where stocks.ITEM_CODE=productinfo.ITEM_CODE AND productinfo.ITEM_CODE='{code}' ")
                         ms.commit()
                         print("Amount updated!")
                         print()

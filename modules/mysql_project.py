@@ -16,22 +16,17 @@ def stock_cat(code):
         table.rows.append(i)
     return table
 
-def status_list(data):
-    lst=stock_status()
-    for i in lst:
-        a=list(data)
-        a.append(i)
-    return a
-
 
 #check stocks
 def check_stock(code=None):
     query=('SELECT STOCK from stocks ')
     if code==None:
+        a=[]
         mysql_csr.execute(query)
         data=mysql_csr.fetchall()
         for row in data:
-            return int(row[0])
+            a.append(int(row[0]))
+        return a
     else:
         mysql_csr.execute(query+f" where ITEM_CODE='{code}' ")
         data=mysql_csr.fetchall()
@@ -42,7 +37,7 @@ def check_stock(code=None):
 #display specific stock
 def getstockinfo(code):
     stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
-    mysql_csr.execute(stockviewquery+f"AND productinfo.ITEM_CODE ='{code}' ")
+    mysql_csr.execute(stockviewquery+f" AND productinfo.ITEM_CODE ='{code}' ")
     data=mysql_csr.fetchall()
     table = BeautifulTable()
     table.columns.header = ["CODE",'NAME','BRAND','ITEMS SOLD','STOCK']
@@ -102,7 +97,7 @@ def displayitem(code,field):
 #update a sepcific field 
 def update(code,field,exp):
     print("Selected Record:-")
-    print(getproductinfo(code,'productInfo'))
+    print(getproductinfo(code))
     try:
         new=input("Enter New "+exp+": ")
         mysql_csr.execute(f"UPDATE productinfo SET {field} = '{new}' WHERE ITEM_CODE = '{code}' ")
@@ -197,7 +192,7 @@ def supplier_info(mode,code=None):
 
 #get a list of stock status
 def stock_status():
-    lst=check_stock()
+    lst = check_stock()
     flag=[]
     for i in lst:
         if i<=10:
