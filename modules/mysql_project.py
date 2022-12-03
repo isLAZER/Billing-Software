@@ -24,28 +24,16 @@ def status_list(data):
     return a
 
 
-def execute(simple_query,header_list):
-    mysql_csr.execute(simple_query)
-    data=mysql_csr.fetchall()
-    table = BeautifulTable()
-    table.columns.header = header_list
-    for row in data:
-        table.rows.append(row)
-    print(table)
-
-
 #check stocks
-def check_stock(mode=0,code=None):
-    query=('SELECT STOCK from stocks')
-    if mode==0 and code==None:
+def check_stock(code=None):
+    query=('SELECT STOCK from stocks ')
+    if code==None:
         mysql_csr.execute(query)
         data=mysql_csr.fetchall()
-        l=[]
         for row in data:
-            l.append(int(row[0]))
-        return l
-    elif mode==0:
-        mysql_csr.execute(query+f"where ITEM_CODE='{code}' ")
+            return int(row[0])
+    else:
+        mysql_csr.execute(query+f" where ITEM_CODE='{code}' ")
         data=mysql_csr.fetchall()
         for row in data:
             return int(row[0])

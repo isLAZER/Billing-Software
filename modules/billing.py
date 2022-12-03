@@ -17,7 +17,7 @@ def make_table(tb):
     for i in tb:
         newlist=i[1:]
         table.rows.append(newlist)
-        total+=i[6]
+        total+=i[5]
     table.rows.append([" "," "," "," ","TOTAL",total])
     return table
 
@@ -26,7 +26,7 @@ def item_shop():
     while True:
         print("Search:-")    
         print()
-        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n(4) View entire shop products\n(5) Exit\n..> "))
+        c = eval(input("(1) Search Item name \n(2) Search Brand name\n(3) Search Category\n(4) Display details of a particular item\n(5) VIEW FULL ITEM SHOP\n(5) Exit\n..> "))
         print()
 
         #item search
@@ -97,8 +97,11 @@ def item_shop():
                     print(table) 
             except:
                 print("No item Found :(")
-
         elif c==4:
+            code=input('Enter the code of that item whose information is to be displayed: ')
+            print(str(displayitem(code,'productInfo')))
+
+        elif c==5:
             tb=getall()
             print(tb)
             x=input("Proceed to billing?(Y/N): ")
@@ -129,7 +132,7 @@ def billing():
     bill=[]
     while True:
         print()
-        x=int(input('[ YOUR CART ]\n(1) Add product to cart\n(2) Remove product from cart\n(3) Display all items in the cart\n(4) Display details of a particular item\n(5) Proceed to checkout\n..> '))
+        x=int(input('[ YOUR CART ]\n(1) Add product to cart\n(2) Remove product from cart\n(3) Display all items in the cart\n(4) Proceed to checkout\n..> '))
         
         #To append an item into the bill
         if x==1:
@@ -138,13 +141,9 @@ def billing():
         #To remove an item from the bill
         elif x==2:
             code=input('Enter the code of the item you want to remove from the bill: ')   
-            remove(code,bill)
-        #To display information of an item    
-        elif x==4:
-            code=input('Enter the code of that item whose information is to be displayed: ')
-            print(str(displayitem(code,'productInfo')))
+            remove(code,bill)   
+    
         #Shows all items in your cart
-        
         elif x==3:
             if bill!=[]:
                 print("\nCART:-")
@@ -153,7 +152,7 @@ def billing():
                 print("NO ITEM IN THE CART!")
                 continue
 
-        elif x==5:
+        elif x==4:
             if bill!=[]:
                 c=input("\n> Are you satisfied with your cart?(Y/N) ")
                 if c=='y' or c=='Y':
@@ -187,7 +186,7 @@ def checkout(table):
     print('Payment method: ',details[2])
     print()
     print('--------------------------------------------------------------------------------')
-    print("STORE NAME: ",info[1])
+    print("                              ",info[1])
     print()
     print()
     print(date_time)

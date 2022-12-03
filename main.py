@@ -42,7 +42,7 @@ if user=="ADMIN":
 #customer menu
 else:
     while True:        
-        c = int(input("\nMenu:-\n(1) Item Shop \n(2) My Account \n(3) Log Out \n..> "))
+        c = int(input("\nMenu:-\n(1) Item Shop \n(2) My Cart \n(3) Log Out \n..> "))
         if c==1:
             item_shop()
         elif c==2:
