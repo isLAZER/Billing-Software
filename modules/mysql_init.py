@@ -10,7 +10,7 @@ import mysql.connector as msql
 #Connecting to the database
 ms=msql.connect(host='localhost', user='root',passwd=entr_pass , database='Python')
 if ms.is_connected():
-    print("Welcome!")
+    print("\nWelcome!")
 else:
     print("Failed to connect to database!")
 mysql_csr=ms.cursor()
