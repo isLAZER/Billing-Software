@@ -3,7 +3,7 @@ from modules.mysql_init import *
 from beautifultable import BeautifulTable
 
 
-#stock queries
+#mysql queries
 stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
 categorystockquery="SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK,CATEGORY FROM productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE "
 
@@ -158,43 +158,6 @@ def remove(code,bill):
                 return bill
         else:
             continue
-    
-
-
-
-#gets supplier info
-def supplier_info(mode,code=None):
-    query="SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,SUPP_NAME,CONTACT FROM supplier,productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND stocks.SUPPLIER_ID=supplier.SUPP_ID"
-    #supplier basic
-    if mode==0:
-        mysql_csr.execute("SELECT * FROM supplier")
-        data=mysql_csr.fetchall()
-        table = BeautifulTable()
-        table.columns.header = ['SUPPLIER_ID','SUPPLIER_NAME','CONTACT','LOACTION']
-        for row in data:
-            newlist=row[1:]
-            table.rows.append(newlist)
-        print(table) 
-    #all supplier info 
-    elif mode==1:
-        mysql_csr.execute(query)
-        data=mysql_csr.fetchall()
-        table = BeautifulTable()
-        table.columns.header = ['CODE','NAME','BRAND','SUPPLIER_NAME','CONTACT']
-        for row in data:
-            table.rows.append(row)
-        print(table)
-    #specific supplier info
-    elif mode==2:
-        mysql_csr.execute(query+f"and productinfo.ITEM_CODE='{code}'")
-        data=mysql_csr.fetchall()
-        table = BeautifulTable()
-        table.columns.header = ['CODE','NAME','BRAND','SUPPLIER_NAME','CONTACT']
-        for row in data:
-            table.rows.append(row)
-        return table  
-    else:
-        print("not a valid mode!")
 
 #get a list of stock status
 def stock_status():
