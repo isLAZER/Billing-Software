@@ -9,7 +9,7 @@ info.close()
 
 # Connecting to the database
 ms = msql.connect(host='localhost', user='root',
-                  passwd="mg31122004", database='Python')
+                    passwd="mg312004", database='Python')
 if ms.is_connected():
     print("\nWelcome!")
 else:
