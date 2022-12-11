@@ -1,29 +1,31 @@
-#Importing modules
+# Importing modules
 from modules.mysql_init import *
-from  modules.mysql_project import *
+from modules.mysql_project import *
 from beautifultable import BeautifulTable
 from datetime import datetime
 from modules.Info_doc import customer_info
 
 
-#setting date and time
+# setting date and time
 now = datetime.now()
 
 
 def make_table(tb):
-    table=BeautifulTable()
-    total=0
-    table.columns.header=["PRODUCT NAME","PRICE","CATEGORY","BRAND","QUANTITY","FINAL PRICE"]
+    table = BeautifulTable()
+    total = 0
+    table.columns.header = ["PRODUCT NAME", "PRICE",
+                            "CATEGORY", "BRAND", "QUANTITY", "FINAL PRICE"]
     for i in tb:
-        newlist=[i[1],i[6],i[3],i[2],i[4],i[5]]
+        newlist = [i[1], i[6], i[3], i[2], i[4], i[5]]
         table.rows.append(newlist)
-        total+=i[5]
-    table.rows.append([" "," "," "," ","TOTAL",total])
+        total += i[5]
+    table.rows.append([" ", " ", " ", " ", "TOTAL", total])
     return table
 
 
 def item_shop():
     while True:
+<<<<<<< HEAD
         print("\n(1) VIEW FULL ITEM SHOP")    
         c = int(input("\nSearch options:-\n(2) Search by Item name \n(3) Search by Brand name\n(4) Search by Category\n(5) Exit\n..> "))
         print()
@@ -44,126 +46,160 @@ def item_shop():
         #item search
         elif c==2:
             displaySpecific("ITEM_NAME","productInfo","item")
+=======
+        print()
+        print("")
+        c = int(input("(1) VIEW FULL ITEM SHOP\n\nSearch options:-\n(2) Search by Item name \n(3) Search by Brand name\n(4) Search by Category\n(5) Exit\n..> "))
+        print()
+
+        # item search
+        if c == 2:
+            displaySpecific("ITEM_NAME", "productInfo", "item")
+>>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
             try:
                 itm = input("Enter item name to be searched: ")
-                mysql_csr.execute(f"SELECT * from productInfo where ITEM_NAME='{itm}' order by ITEM_NAME ")
+                mysql_csr.execute(
+                    f"SELECT * from productInfo where ITEM_NAME='{itm}' order by ITEM_NAME ")
                 data = mysql_csr.fetchall()
-                count=mysql_csr.rowcount
+                count = mysql_csr.rowcount
                 table = BeautifulTable()
-                table.columns.header = ['CODE','NAME','CATEGORY','PRICE', 'DISCOUNT','BRAND']
+                table.columns.header = ['CODE', 'NAME',
+                                        'CATEGORY', 'PRICE', 'DISCOUNT', 'BRAND']
                 for i in data:
                     table.rows.append(i)
-                if count==0:
+                if count == 0:
                     print("No item Found :(")
                 else:
                     print('Search results -')
-                    print(table)    
+                    print(table)
             except:
                 print("No item Found :(")
 
-            #continue option
-            x=input("Continue search?(Y/N): ")
-            if x=='y' or x=='Y':
+            # continue option
+            x = input("Continue search?(Y/N): ")
+            if x == 'y' or x == 'Y':
                 continue
             else:
                 print("Search completed!")
-                break 
+                break
 
-        
-        #brand search
-        elif c==3:
-            displaySpecific("BRAND","productInfo","Brand")
+        # brand search
+        elif c == 3:
+            displaySpecific("BRAND", "productInfo", "Brand")
             try:
                 itm = input("Enter Brand name to be searched: ")
-                mysql_csr.execute(f"SELECT * from productInfo where BRAND ='{itm}' order by ITEM_NAME ")
+                mysql_csr.execute(
+                    f"SELECT * from productInfo where BRAND ='{itm}' order by ITEM_NAME ")
                 data = mysql_csr.fetchall()
-                count=mysql_csr.rowcount
+                count = mysql_csr.rowcount
                 table = BeautifulTable()
-                table.columns.header = ['CODE','NAME','CATEGORY','PRICE', 'DISCOUNT','BRAND']
+                table.columns.header = ['CODE', 'NAME',
+                                        'CATEGORY', 'PRICE', 'DISCOUNT', 'BRAND']
                 for i in data:
                     table.rows.append(i)
-                if count==0:
+                if count == 0:
                     print("No item Found :(")
                 else:
                     print('Search results -')
-                    print(table)    
+                    print(table)
             except:
                 print("No item Found :(")
- 
-        #category search
-        elif c==4:
-            displaySpecific("CATEGORY","productinfo","Category")
-            try:
-                itm = input("Enter Category to be searched: ")
-                mysql_csr.execute(f"SELECT * from productInfo where CATEGORY ='{itm}' order by ITEM_NAME ")
-                data = mysql_csr.fetchall()
-                count=mysql_csr.rowcount
-                table = BeautifulTable()
-                table.columns.header = ['CODE','NAME','CATEGORY','PRICE', 'DISCOUNT','BRAND']
-                for i in data:
-                    table.rows.append(i)
-                if count==0:
-                    print("No item Found :(")
-                else:
-                    print('Search results -')
-                    print(table) 
-            except:
-                print("No item Found :(")
+<<<<<<< HEAD
             
         elif c==5:
+=======
+
+        # category search
+        elif c == 4:
+            displaySpecific("CATEGORY", "productinfo", "Category")
+            try:
+                itm = input("Enter Category to be searched: ")
+                mysql_csr.execute(
+                    f"SELECT * from productInfo where CATEGORY ='{itm}' order by ITEM_NAME ")
+                data = mysql_csr.fetchall()
+                count = mysql_csr.rowcount
+                table = BeautifulTable()
+                table.columns.header = ['CODE', 'NAME',
+                                        'CATEGORY', 'PRICE', 'DISCOUNT', 'BRAND']
+                for i in data:
+                    table.rows.append(i)
+                if count == 0:
+                    print("No item Found :(")
+                else:
+                    print('Search results -')
+                    print(table)
+            except:
+                print("No item Found :(")
+
+        elif c == 1:
+            tb = getall()
+            print(tb)
+            x = input("Proceed to billing?(Y/N): ")
+            if x == 'y' or x == 'Y':
+                print("Search completed!")
+                print("\nClick on My Cart!")
+                break
+            else:
+                continue
+
+        elif c == 5:
+>>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
             print("Search completed!")
             break
         else:
             print('Wrong input!')
             continue
 
-        #continue option
-        x=input("Continue Search?(Y/N): ")
-        if x=='y' or x=='Y':
+        # continue option
+        x = input("Continue Search?(Y/N): ")
+        if x == 'y' or x == 'Y':
             continue
         else:
             print("Search completed!")
             break
-        
-      
-#Defining the function 
+
+
+# Defining the function
 def billing():
-    bill=[]
+    bill = []
     while True:
         print()
-        x=int(input('[ YOUR CART ]\n(1) Add product to cart\n(2) Remove product from cart\n(3) Display all items in the cart\n(4) Display item code list\n(5) Proceed to checkout\n..> '))
-        
-        #To append an item into the bill
-        if x==1:
-            code=input('\nEnter the code of the item you want to add to the bill: ')
-            append(code,bill)
-        #To remove an item from the bill
-        elif x==2:
-            code=input('\nEnter the code of the item you want to remove from the bill: ')   
-            remove(code,bill)
-               
-        #Shows all items in your cart
-        elif x==3:
-            if bill!=[]:
+        x = int(input('[ YOUR CART ]\n(1) Add product to cart\n(2) Remove product from cart\n(3) Display all items in the cart\n(4) Display item code list\n(5) Proceed to checkout\n..> '))
+
+        # To append an item into the bill
+        if x == 1:
+            code = input(
+                '\nEnter the code of the item you want to add to the bill: ')
+            append(code, bill)
+        # To remove an item from the bill
+        elif x == 2:
+            code = input(
+                '\nEnter the code of the item you want to remove from the bill: ')
+            remove(code, bill)
+
+        # Shows all items in your cart
+        elif x == 3:
+            if bill != []:
                 print("\nCART:-")
                 print(make_table(bill))
             else:
                 print("NO ITEM IN THE CART!")
                 continue
-        #Show item code list
-        elif x==4:
-            tb=BeautifulTable()
-            mysql_csr.execute(f"SELECT ITEM_CODE,ITEM_NAME FROM productinfo order by ITEM_NAME ")
+        # Show item code list
+        elif x == 4:
+            tb = BeautifulTable()
+            mysql_csr.execute(
+                f"SELECT ITEM_CODE,ITEM_NAME FROM productinfo order by ITEM_NAME ")
             data = mysql_csr.fetchall()
-            tb.columns.header = [" Item Code "," List:- "]
+            tb.columns.header = [" Item Code ", " List:- "]
             for i in data:
                 tb.rows.append(i)
             print(tb)
 
-        elif x==5:
-            if bill!=[]:
-                c=input("\n> Are you satisfied with your cart?(Y/N) ")
-                if c=='y' or c=='Y':
+        elif x == 5:
+            if bill != []:
+                c = input("\n> Are you satisfied with your cart?(Y/N) ")
+                if c == 'y' or c == 'Y':
                     return make_table(bill)
                 else:
                     continue
@@ -174,37 +210,48 @@ def billing():
             print("Entered option is not in menu")
             continue
 
+
 def checkout(table):
     print()
-    details=customer_info()
+    details = customer_info()
     import pickle
-    infofile =open("Backend/shop_information.dat","rb")
+    infofile = open("Backend/shop_information.dat", "rb")
     try:
-        info=pickle.load(infofile)
+        info = pickle.load(infofile)
     except:
         pass
     infofile.close()
-    
+
     date_time = now.strftime("date:%d/%m/%Y\ntime:%H:%M")
     print()
     print('----------------------------------------------------------------------------')
     print()
-    print('Customer Name: ',details[0])
-    print('Customer Phone no.: ',details[1])
-    print('Payment method: ',details[2])
+    print('Customer Name: ', details[0])
+    print('Customer Phone no.: ', details[1])
+    print('Payment method: ', details[2])
     print()
+<<<<<<< HEAD
     print('----------------------------------------------------------------------------')
     print("                              ",info[1])
+=======
+    print('--------------------------------------------------------------------------------')
+    print("                              ", info[1])
+>>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
     print()
     print()
     print(date_time)
     print(table)
     print()
-    print('STORE_ID: ',info[0])
-    print('ADDRESS: ',info[3])
-    print('CONTACT: ',info[2])
+    print('STORE_ID: ', info[0])
+    print('ADDRESS: ', info[3])
+    print('CONTACT: ', info[2])
     print()
     print("THANK YOU FOR VISITING OUR STORE \nHAVE A NICE DAY!")
     print()
+<<<<<<< HEAD
     print('----------------------------------------------------------------------------')
     print()
+=======
+    print('--------------------------------------------------------------------------------')
+    print()
+>>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
