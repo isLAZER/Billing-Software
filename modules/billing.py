@@ -25,7 +25,6 @@ def make_table(tb):
 
 def item_shop():
     while True:
-<<<<<<< HEAD
         print("\n(1) VIEW FULL ITEM SHOP")    
         c = int(input("\nSearch options:-\n(2) Search by Item name \n(3) Search by Brand name\n(4) Search by Category\n(5) Exit\n..> "))
         print()
@@ -46,16 +45,6 @@ def item_shop():
         #item search
         elif c==2:
             displaySpecific("ITEM_NAME","productInfo","item")
-=======
-        print()
-        print("")
-        c = int(input("(1) VIEW FULL ITEM SHOP\n\nSearch options:-\n(2) Search by Item name \n(3) Search by Brand name\n(4) Search by Category\n(5) Exit\n..> "))
-        print()
-
-        # item search
-        if c == 2:
-            displaySpecific("ITEM_NAME", "productInfo", "item")
->>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
             try:
                 itm = input("Enter item name to be searched: ")
                 mysql_csr.execute(
@@ -74,15 +63,15 @@ def item_shop():
                     print(table)
             except:
                 print("No item Found :(")
-
+            
             # continue option
-            x = input("Continue search?(Y/N): ")
+            x = input("Continue Search?(Y/N): ")
             if x == 'y' or x == 'Y':
                 continue
             else:
                 print("Search completed!")
                 break
-
+    
         # brand search
         elif c == 3:
             displaySpecific("BRAND", "productInfo", "Brand")
@@ -104,60 +93,49 @@ def item_shop():
                     print(table)
             except:
                 print("No item Found :(")
-<<<<<<< HEAD
-            
-        elif c==5:
-=======
 
-        # category search
-        elif c == 4:
-            displaySpecific("CATEGORY", "productinfo", "Category")
+            # continue option
+            x = input("Continue Search?(Y/N): ")
+            if x == 'y' or x == 'Y':
+                continue
+            else:
+                print("Search completed!")
+                break
+        
+        #category search
+        elif c==4:
+            displaySpecific("CATEGORY","productinfo","Category")
             try:
                 itm = input("Enter Category to be searched: ")
-                mysql_csr.execute(
-                    f"SELECT * from productInfo where CATEGORY ='{itm}' order by ITEM_NAME ")
+                mysql_csr.execute(f"SELECT * from productInfo where CATEGORY ='{itm}' order by ITEM_NAME ")
                 data = mysql_csr.fetchall()
-                count = mysql_csr.rowcount
+                count=mysql_csr.rowcount
                 table = BeautifulTable()
-                table.columns.header = ['CODE', 'NAME',
-                                        'CATEGORY', 'PRICE', 'DISCOUNT', 'BRAND']
+                table.columns.header = ['CODE','NAME','CATEGORY','PRICE', 'DISCOUNT','BRAND']
                 for i in data:
                     table.rows.append(i)
-                if count == 0:
+                if count==0:
                     print("No item Found :(")
                 else:
                     print('Search results -')
-                    print(table)
+                    print(table) 
             except:
                 print("No item Found :(")
 
-        elif c == 1:
-            tb = getall()
-            print(tb)
-            x = input("Proceed to billing?(Y/N): ")
+            # continue option
+            x = input("Continue Search?(Y/N): ")
             if x == 'y' or x == 'Y':
-                print("Search completed!")
-                print("\nClick on My Cart!")
-                break
-            else:
                 continue
+            else:
+                print("Search completed!")
+                break
 
-        elif c == 5:
->>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
+        elif c==5:
             print("Search completed!")
             break
         else:
             print('Wrong input!')
             continue
-
-        # continue option
-        x = input("Continue Search?(Y/N): ")
-        if x == 'y' or x == 'Y':
-            continue
-        else:
-            print("Search completed!")
-            break
-
 
 # Defining the function
 def billing():
@@ -230,13 +208,8 @@ def checkout(table):
     print('Customer Phone no.: ', details[1])
     print('Payment method: ', details[2])
     print()
-<<<<<<< HEAD
     print('----------------------------------------------------------------------------')
     print("                              ",info[1])
-=======
-    print('--------------------------------------------------------------------------------')
-    print("                              ", info[1])
->>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
     print()
     print()
     print(date_time)
@@ -248,10 +221,5 @@ def checkout(table):
     print()
     print("THANK YOU FOR VISITING OUR STORE \nHAVE A NICE DAY!")
     print()
-<<<<<<< HEAD
     print('----------------------------------------------------------------------------')
     print()
-=======
-    print('--------------------------------------------------------------------------------')
-    print()
->>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010

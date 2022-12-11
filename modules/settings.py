@@ -4,7 +4,6 @@ import pickle
 import calendar
 from datetime import *
 
-<<<<<<< HEAD
 #current date
 now = datetime.now()
 today = date.today()
@@ -12,9 +11,6 @@ print("Today's date:", today)
 print()
 
 #finds current mounth calender
-=======
-
->>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
 def cal():
     today = date.today()
     mth = today.month
@@ -22,7 +18,6 @@ def cal():
     cal = calendar.month(yr, mth)
     return cal
 
-<<<<<<< HEAD
 #display calendar
 def showcalendar():
     print()
@@ -35,11 +30,6 @@ def showcalendar():
 
 
 #settings menu
-=======
-# settings menu
-
-
->>>>>>> 83cc5ee37429151d7708157b98dbabe4bf0cd010
 def setting():
     while True:
         c = input(
