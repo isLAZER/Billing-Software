@@ -3,16 +3,14 @@ from modules.mysql_init import *
 from beautifultable import BeautifulTable
 
 
-<<<<<<< HEAD
-# stock queries
+#mysql queries
 stockviewquery = 'SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
 categorystockquery = "SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK,CATEGORY FROM productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE "
 
-=======
+
 #mysql queries
 stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
 categorystockquery="SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK,CATEGORY FROM productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE "
->>>>>>> 4c7f02d893b62a2d29f6f647520c7afa13f2bca0
 
 def stock_cat(code):
     mysql_csr.execute(categorystockquery+f"AND productinfo.CATEGORY ='{code}'")
