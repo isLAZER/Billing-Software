@@ -184,7 +184,6 @@ def remove(code, bill):
                 return bill
         else:
             continue
-<<<<<<< HEAD
 
 
 # gets supplier info
@@ -223,8 +222,6 @@ def supplier_info(mode, code=None):
         return table
     else:
         print("not a valid mode!")
-=======
->>>>>>> 4c7f02d893b62a2d29f6f647520c7afa13f2bca0
 
 # get a list of stock status
 

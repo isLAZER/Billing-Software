@@ -71,4 +71,3 @@ else:
 # good bye
 print("\nTHANK YOU FOR USING OUR SOFTWARE...\nHAVE A NICE DAY! :)\n ")
 print()
-ex = input("SS taken?")
