@@ -34,6 +34,7 @@ def setting():
     while True:
         c = input(
             '\nSettings:-\n(1) Change admin username and password\n(2) Change shop details\n\n[Press X to exit]\n..> ')
+        #administrator settings
         if c == '1':
             a = input(
                 "  Do you really want to change administrator settings?\n(They are very impotant for your software to work properly)\n[Press Y to confirm!]\n..> ")
@@ -55,6 +56,8 @@ def setting():
                 file.close()
             else:
                 break
+        
+        #shop settings
         elif c == '2':
             print("Continue with changing shop details?")
             z = input(

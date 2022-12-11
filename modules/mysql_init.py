@@ -1,9 +1,7 @@
 import mysql.connector as msql
 import pickle
-# gathering login information
-'''info = open("Backend/login_info.dat", "rb")
-a = pickle.load(info)
-info.close()'''
+
+ 
 inp=input("Mysql password: ")
 entr_pass = str(inp)
 
