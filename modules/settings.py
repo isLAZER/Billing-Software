@@ -2,14 +2,32 @@
 from modules.Info_doc import Info_input
 import pickle 
 import calendar
-from datetime import date
+from datetime import *
 
+#current date
+now = datetime.now()
+today = date.today()
+print("Today's date:", today)
+print()
+
+#finds current mounth calender
 def cal():
     today = date.today()
     mth= today.month
     yr= today.year
     cal=calendar.month(yr,mth)
     return cal
+
+#display calendar
+def showcalendar():
+    print()
+    print('--------------------')
+    print(now.strftime("date: %d/%m/%Y\ntime: %H:%M"))
+    print()
+    print(cal())
+    print('--------------------')
+    print()
+
 
 #settings menu
 def setting():

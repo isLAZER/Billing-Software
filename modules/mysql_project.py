@@ -68,7 +68,7 @@ def getproductinfo(code):
 
 #gets all the rec
 def getall():
-    mysql_csr.execute("select * from productInfo order by ITEM_NAME ")
+    mysql_csr.execute("select * from productInfo ")
     data = mysql_csr.fetchall()
     table=BeautifulTable()
     table.columns.header = ['CODE','NAME','PRICE','DISCOUNT','BRAND','CATEGORY']

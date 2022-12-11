@@ -24,13 +24,25 @@ def make_table(tb):
 
 def item_shop():
     while True:
-        print()
-        print("")    
-        c = int(input("(1) VIEW FULL ITEM SHOP\n\nSearch options:-\n(2) Search by Item name \n(3) Search by Brand name\n(4) Search by Category\n(5) Exit\n..> "))
+        print("\n(1) VIEW FULL ITEM SHOP")    
+        c = int(input("\nSearch options:-\n(2) Search by Item name \n(3) Search by Brand name\n(4) Search by Category\n(5) Exit\n..> "))
         print()
 
+        #item shop
+        if c==1:
+            tb=getall()
+            print(tb)
+            x=input("Proceed to billing?(Y/N): ")
+            if x=='y' or x=='Y':
+                print("Search completed!")
+                a=billing()
+                checkout(a)
+                break  
+            else:
+                continue
+
         #item search
-        if c==2:
+        elif c==2:
             displaySpecific("ITEM_NAME","productInfo","item")
             try:
                 itm = input("Enter item name to be searched: ")
@@ -97,17 +109,6 @@ def item_shop():
                     print(table) 
             except:
                 print("No item Found :(")
-
-        elif c==1:
-            tb=getall()
-            print(tb)
-            x=input("Proceed to billing?(Y/N): ")
-            if x=='y' or x=='Y':
-                print("Search completed!")
-                print("\nClick on My Cart!")
-                break  
-            else:
-                continue
             
         elif c==5:
             print("Search completed!")
@@ -186,13 +187,13 @@ def checkout(table):
     
     date_time = now.strftime("date:%d/%m/%Y\ntime:%H:%M")
     print()
-    print('--------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------')
     print()
     print('Customer Name: ',details[0])
     print('Customer Phone no.: ',details[1])
     print('Payment method: ',details[2])
     print()
-    print('--------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------')
     print("                              ",info[1])
     print()
     print()
@@ -205,5 +206,5 @@ def checkout(table):
     print()
     print("THANK YOU FOR VISITING OUR STORE \nHAVE A NICE DAY!")
     print()
-    print('--------------------------------------------------------------------------------')
+    print('----------------------------------------------------------------------------')
     print()
