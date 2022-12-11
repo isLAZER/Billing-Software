@@ -44,7 +44,7 @@ def shop():
             try:
                 mysql_csr.execute(
                     f"DELETE from productinfo WHERE Item_code='{code}';  ")
-                print("Item removed from datbase ")
+                print("Item removed from database ")
                 ms.commit()
             except:
                 print("Error!\nFAILED TO DELETE ENTRY!")
