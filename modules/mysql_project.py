@@ -4,11 +4,6 @@ from beautifultable import BeautifulTable
 
 
 #mysql queries
-stockviewquery = 'SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
-categorystockquery = "SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK,CATEGORY FROM productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE "
-
-
-#mysql queries
 stockviewquery='SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STORED_ITEMS-STOCK AS SOLD,STOCK AS CURRENT_STOCK FROM stocks,productinfo,item_storage WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE AND productinfo.ITEM_CODE=item_storage.ITEM_CODE'
 categorystockquery="SELECT productinfo.ITEM_CODE,ITEM_NAME,BRAND,STOCK,CATEGORY FROM productinfo,stocks WHERE productinfo.ITEM_CODE=stocks.ITEM_CODE "
 
@@ -69,8 +64,7 @@ def getproductinfo(code):
     mysql_csr.execute(f"select * from productinfo where ITEM_CODE ='{code}'")
     data = mysql_csr.fetchall()
     table = BeautifulTable()
-    table.columns.header = ['CODE', 'NAME',
-                            'PRICE', 'DISCOUNT', 'BRAND', 'CATEGORY']
+    table.columns.header = ['CODE', 'NAME','PRICE', 'DISCOUNT', 'BRAND', 'CATEGORY']
     for i in data:
         table.rows.append(i)
     return table
@@ -79,11 +73,10 @@ def getproductinfo(code):
 
 
 def getall():
-    mysql_csr.execute("select * from productInfo order by ITEM_NAME ")
+    mysql_csr.execute("select * from productInfo ")
     data = mysql_csr.fetchall()
     table = BeautifulTable()
-    table.columns.header = ['CODE', 'NAME',
-                            'PRICE', 'DISCOUNT', 'BRAND', 'CATEGORY']
+    table.columns.header = ['CODE', 'NAME','PRICE', 'DISCOUNT', 'BRAND', 'CATEGORY']
     for i in data:
         table.rows.append(i)
     return table

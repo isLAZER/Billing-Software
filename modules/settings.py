@@ -2,9 +2,15 @@
 from modules.Info_doc import Info_input
 import pickle
 import calendar
-from datetime import date
+from datetime import *
 
+#current date
+now = datetime.now()
+today = date.today()
+print("Today's date:", today)
+print()
 
+#finds current mounth calender
 def cal():
     today = date.today()
     mth = today.month
@@ -12,13 +18,23 @@ def cal():
     cal = calendar.month(yr, mth)
     return cal
 
-# settings menu
+#display calendar
+def showcalendar():
+    print()
+    print('--------------------')
+    print(now.strftime("date: %d/%m/%Y\ntime: %H:%M"))
+    print()
+    print(cal())
+    print('--------------------')
+    print()
 
 
+#settings menu
 def setting():
     while True:
         c = input(
             '\nSettings:-\n(1) Change admin username and password\n(2) Change shop details\n\n[Press X to exit]\n..> ')
+        #administrator settings
         if c == '1':
             a = input(
                 "  Do you really want to change administrator settings?\n(They are very impotant for your software to work properly)\n[Press Y to confirm!]\n..> ")
@@ -40,6 +56,8 @@ def setting():
                 file.close()
             else:
                 break
+        
+        #shop settings
         elif c == '2':
             print("Continue with changing shop details?")
             z = input(

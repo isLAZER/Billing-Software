@@ -1,7 +1,7 @@
-# Billing-Software
+# shop management
 
 ## Introduction
-The billing system is the most important function of the sales process in an organisation. A lot of thought and effort goes into setting up a streamlined billing system. In recent times, billing system software has been prominent in helping businesses to improve efficiency in their business process.
+The shop management is the most important function of the sales process in an organisation. A lot of thought and effort goes into setting up a streamlined billing system. In recent times, billing system software has been prominent in helping businesses to improve efficiency in their business process.
 
 ## Requirements
 * Python 3.10
