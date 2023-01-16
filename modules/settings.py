@@ -4,13 +4,15 @@ import pickle
 import calendar
 from datetime import *
 
-#current date
+# current date
 now = datetime.now()
 today = date.today()
 print("Today's date:", today)
 print()
 
-#finds current mounth calender
+# finds current mounth calender
+
+
 def cal():
     today = date.today()
     mth = today.month
@@ -18,7 +20,9 @@ def cal():
     cal = calendar.month(yr, mth)
     return cal
 
-#display calendar
+# display calendar
+
+
 def showcalendar():
     print()
     print('--------------------')
@@ -29,12 +33,12 @@ def showcalendar():
     print()
 
 
-#settings menu
+# settings menu
 def setting():
     while True:
         c = input(
             '\nSettings:-\n(1) Change admin username and password\n(2) Change shop details\n\n[Press X to exit]\n..> ')
-        #administrator settings
+        # administrator settings
         if c == '1':
             a = input(
                 "  Do you really want to change administrator settings?\n(They are very impotant for your software to work properly)\n[Press Y to confirm!]\n..> ")
@@ -56,8 +60,8 @@ def setting():
                 file.close()
             else:
                 break
-        
-        #shop settings
+
+        # shop settings
         elif c == '2':
             print("Continue with changing shop details?")
             z = input(

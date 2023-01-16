@@ -28,26 +28,27 @@ if user == "ADMIN":
             Info_display()
         elif c == 5:
             setting()
-        elif c==6:
+        elif c == 6:
             showcalendar()
-        elif c==7:
+        elif c == 7:
             break
         else:
             print("OPTION NOT AVAILABLE ")
 
 # customer menu
 else:
-    while True:        
-        c = int(input("\nMenu:-\n(1) Item Shop \n(2) My Cart\n(3) Show Calendar\n(4) Log Out \n..> "))
-        if c==1:
+    while True:
+        c = int(input(
+            "\nMenu:-\n(1) Item Shop \n(2) My Cart\n(3) Show Calendar\n(4) Log Out \n..> "))
+        if c == 1:
             item_shop()
         elif c == 2:
             a = billing()
             checkout(a)
             break
-        elif c==3:
+        elif c == 3:
             showcalendar()
-        elif c==4:
+        elif c == 4:
             break
         else:
             print("OPTION NOT AVAILABLE ")

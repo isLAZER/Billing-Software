@@ -52,5 +52,5 @@ def customer_info():
     elif pay == 2:
         mode = 'Debit/Credit'
 
-    data = [name, contact, mode]
+    data = [name, contact, mode] 
     return data
